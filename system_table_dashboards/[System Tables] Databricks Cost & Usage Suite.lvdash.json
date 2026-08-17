@@ -5778,11 +5778,11 @@
                 "4. **[Data Lineage & Catalog Utilization](__PAGE__/lineage_3c10256d)**  \n",
                 "   Focused on data lineage, access patterns, and catalog utilization. This page explores entity-based access, catalog usage trends, and table-specific access metrics to provide a comprehensive view of data flow and user interactions across the workspace.\n",
                 "\n",
-                "5. **[Genie Usage Cost Tracking](__PAGE__/genie_1d9ea6da)**  \n",
-                "   Tracks billed and free-tier Genie DBU consumption across workspaces, surfaces, and users. Covers daily cost trends, week-over-week growth, cumulative monthly spend, and per-user activity tables for adoption tracking and chargeback attribution.\n",
+                "5. **[AI & ML Infrastructure Cost](__PAGE__/aiml_055d8ed3)**  \n",
+                "   Provides detailed cost tracking for Databricks AI/ML infrastructure products: Lakebase, Model Serving, Vector Search, AI Gateway, and Apps. Covers endpoint-level cost attribution, workspace chargeback, adoption trends, and period-over-period comparisons.\n",
                 "\n",
-                "6. **[AI & ML Infrastructure Cost](__PAGE__/aiml_055d8ed3)**  \n",
-                "   Provides detailed cost tracking for Databricks AI/ML infrastructure products: Lakebase, Model Serving, Vector Search, AI Gateway, and Apps. Covers endpoint-level cost attribution, workspace chargeback, adoption trends, and period-over-period comparisons."
+                "6. **[Genie Usage Cost Tracking](__PAGE__/genie_1d9ea6da)**  \n",
+                "   Tracks billed and free-tier Genie DBU consumption across workspaces, surfaces, and users. Covers daily cost trends, week-over-week growth, cumulative monthly spend, and per-user activity tables for adoption tracking and chargeback attribution."
               ]
             }
           },

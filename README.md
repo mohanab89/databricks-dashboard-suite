@@ -60,22 +60,22 @@ The suite is delivered as a single multi-page dashboard — **[[System Tables] D
    * **Catalog and Team Usage** – Catalog usage by teams and entity types.
    * **Table Access Details** – Includes access frequency by entity, user-level access, and upstream/downstream table lineage.
 
-5. **Genie Usage Cost Tracking**  
-   Focuses on Databricks Genie usage and cost, including free vs. billed consumption and user-level activity:
-   * **Free vs. Billed DBUs** – Compares free and billed Genie consumption.
-   * **Daily Billed Cost** – Cost trends by SKU, surface, and channel.
-   * **Cost by User and Surface** – Attributes billed cost to users, surfaces, and channels.
-   * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
-   * **User Activity** – Active days and average daily cost per user.
-   * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
-
-6. **AI & ML Infrastructure Cost**  
+5. **AI & ML Infrastructure Cost**  
    Focuses on the cost of AI/ML and serverless infrastructure products – Model Serving, Vector Search, AI Gateway, Lakebase, and Databricks Apps. Useful for tracking GenAI/ML platform spend and adoption:
    * **Daily Cost by Product** – Spend trends across Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.
    * **Cost by Endpoint and Application** – Attributes cost to individual serving endpoints and apps.
    * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
    * **New vs. Existing Endpoints** – Tracks newly introduced endpoints and apps over the last 30 days.
    * **Lakebase Compute vs. Storage** – Splits Lakebase spend into compute and storage.
+   * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
+
+6. **Genie Usage Cost Tracking**  
+   Focuses on Databricks Genie usage and cost, including free vs. billed consumption and user-level activity:
+   * **Free vs. Billed DBUs** – Compares free and billed Genie consumption.
+   * **Daily Billed Cost** – Cost trends by SKU, surface, and channel.
+   * **Cost by User and Surface** – Attributes billed cost to users, surfaces, and channels.
+   * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
+   * **User Activity** – Active days and average daily cost per user.
    * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
 
 ![Sample Dashboard](sample_screenshot_1.png)
