@@ -216,7 +216,7 @@
           "position": {
             "x": 0,
             "y": 11,
-            "width": 2,
+            "width": 4,
             "height": 1
           }
         },
@@ -305,9 +305,9 @@
             }
           },
           "position": {
-            "x": 2,
+            "x": 4,
             "y": 11,
-            "width": 2,
+            "width": 4,
             "height": 1
           }
         },
@@ -396,9 +396,9 @@
             }
           },
           "position": {
-            "x": 4,
+            "x": 8,
             "y": 11,
-            "width": 2,
+            "width": 4,
             "height": 1
           }
         },
@@ -470,9 +470,9 @@
             }
           },
           "position": {
-            "x": 2,
+            "x": 4,
             "y": 22,
-            "width": 4,
+            "width": 8,
             "height": 4
           }
         },
@@ -514,7 +514,7 @@
           "position": {
             "x": 0,
             "y": 22,
-            "width": 2,
+            "width": 4,
             "height": 2
           }
         },
@@ -556,7 +556,7 @@
           "position": {
             "x": 0,
             "y": 24,
-            "width": 2,
+            "width": 4,
             "height": 2
           }
         },
@@ -649,7 +649,7 @@
           "position": {
             "x": 0,
             "y": 17,
-            "width": 6,
+            "width": 12,
             "height": 5
           }
         },
@@ -716,7 +716,7 @@
           "position": {
             "x": 0,
             "y": 26,
-            "width": 4,
+            "width": 8,
             "height": 5
           }
         },
@@ -770,9 +770,9 @@
             }
           },
           "position": {
-            "x": 4,
+            "x": 8,
             "y": 26,
-            "width": 1,
+            "width": 2,
             "height": 5
           }
         },
@@ -826,49 +826,112 @@
             }
           },
           "position": {
-            "x": 5,
+            "x": 10,
             "y": 26,
-            "width": 1,
+            "width": 2,
             "height": 5
           }
         },
         {
           "widget": {
             "name": "efba6ec3",
-            "textbox_spec": "### Cross-Compute Cost Analysis Section\n----\nThis section provides a focused analysis of cost distribution across all compute types, including all-purpose clusters, Delta Live Tables (DLT), jobs, model inference, SQL, and others. Key visualizations enable users to monitor, compare, and evaluate spend patterns, supporting a comprehensive understanding of cost allocation and trends. \n\n1. **Daily Spend per Compute Type Over Time**: Tracks daily spending across each compute type, revealing spending trends and allowing users to identify shifts in cost allocation over time.\n\n2. **Spend in the Last 30 Days vs. Previous 30 Days**: A comparison of recent and prior 30-day spending to highlight cost changes across all compute types, helping assess recent cost management performance.\n\n3. **Week-Over-Week Cost Change Percentage**: Displays the week-over-week change in costs, showing percentage variations over time and helping identify significant cost increases or decreases.\n\n4. **Daily Spend per Workspace Over Time**: Visualizes daily spending across different workspaces, allowing for workspace-level cost analysis to pinpoint cost-intensive environments.\n\n5. **Cost by Workspace in the Last 30 Days**: A breakdown of total spending per workspace for the last 30 days, enabling a summary view of recent workspace-based costs.\n\n6. **Cost by Compute Type in the Last 30 Days**: Shows cost distribution across compute types for the past 30 days, helping identify the most expensive compute types in recent operations.\n\nThis section equips users with the tools to analyze compute-related costs comprehensively, ensuring efficient resource allocation and cost-effective management across different Databricks environments.\n"
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Cross-Compute Cost Analysis Section\n",
+                "----\n",
+                "This section provides a focused analysis of cost distribution across all compute types, including all-purpose clusters, Delta Live Tables (DLT), jobs, model inference, SQL, and others. Key visualizations enable users to monitor, compare, and evaluate spend patterns, supporting a comprehensive understanding of cost allocation and trends. \n",
+                "\n",
+                "1. **Daily Spend per Compute Type Over Time**: Tracks daily spending across each compute type, revealing spending trends and allowing users to identify shifts in cost allocation over time.\n",
+                "\n",
+                "2. **Spend in the Last 30 Days vs. Previous 30 Days**: A comparison of recent and prior 30-day spending to highlight cost changes across all compute types, helping assess recent cost management performance.\n",
+                "\n",
+                "3. **Week-Over-Week Cost Change Percentage**: Displays the week-over-week change in costs, showing percentage variations over time and helping identify significant cost increases or decreases.\n",
+                "\n",
+                "4. **Daily Spend per Workspace Over Time**: Visualizes daily spending across different workspaces, allowing for workspace-level cost analysis to pinpoint cost-intensive environments.\n",
+                "\n",
+                "5. **Cost by Workspace in the Last 30 Days**: A breakdown of total spending per workspace for the last 30 days, enabling a summary view of recent workspace-based costs.\n",
+                "\n",
+                "6. **Cost by Compute Type in the Last 30 Days**: Shows cost distribution across compute types for the past 30 days, helping identify the most expensive compute types in recent operations.\n",
+                "\n",
+                "This section equips users with the tools to analyze compute-related costs comprehensively, ensuring efficient resource allocation and cost-effective management across different Databricks environments.\n"
+              ]
+            }
           },
           "position": {
             "x": 0,
             "y": 12,
-            "width": 6,
+            "width": 12,
             "height": 5
           }
         },
         {
           "widget": {
             "name": "2f03f872",
-            "textbox_spec": "### Cross-Compute Cost Analysis Dashboard\n---\nThis dashboard provides a streamlined, single-section view of cost distribution across all Databricks compute types, including all-purpose clusters, Delta Live Tables (DLT), jobs, model inference, SQL, and other compute resources. The analysis is designed to help teams monitor spending patterns, compare costs across timeframes, and analyze resource allocation for cost optimization. \n\n#### Dashboard Filters\n- **Date Range**: Selects a specific date range for analysis, allowing for a focused review of recent or historical spending patterns.\n\n- **Workspace Name**: Filters data by workspace to assess cost differences across various workspaces, helping identify which workspaces incur the most expense.\n\n- **Compute Type**: Filters the visualizations by compute type (e.g., all-purpose, DLT, jobs, model inference), enabling analysis of spending trends specific to each compute resource.\n\n#### System Tables Used\n- system.billing.usage\n- system.billing.list_prices"
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Cross-Compute Cost Analysis Dashboard\n",
+                "---\n",
+                "This dashboard provides a streamlined, single-section view of cost distribution across all Databricks compute types, including all-purpose clusters, Delta Live Tables (DLT), jobs, model inference, SQL, and other compute resources. The analysis is designed to help teams monitor spending patterns, compare costs across timeframes, and analyze resource allocation for cost optimization. \n",
+                "\n",
+                "#### Dashboard Filters\n",
+                "- **Date Range**: Selects a specific date range for analysis, allowing for a focused review of recent or historical spending patterns.\n",
+                "\n",
+                "- **Workspace Name**: Filters data by workspace to assess cost differences across various workspaces, helping identify which workspaces incur the most expense.\n",
+                "\n",
+                "- **Compute Type**: Filters the visualizations by compute type (e.g., all-purpose, DLT, jobs, model inference), enabling analysis of spending trends specific to each compute resource.\n",
+                "\n",
+                "#### System Tables Used\n",
+                "- system.billing.usage\n",
+                "- system.billing.list_prices"
+              ]
+            }
           },
           "position": {
             "x": 0,
             "y": 6,
-            "width": 6,
+            "width": 12,
             "height": 5
           }
         },
         {
           "widget": {
             "name": "9e19545c",
-            "textbox_spec": "### Dashboard Index\n----\nThis dashboard provides a central reference for monitoring and analyzing various aspects of data costs, lineage, and jobs across Databricks environments. It includes links to other dashboards for in-depth, specialized analysis:\n\n1. **[[System Tables] Databricks Unified Cost Analysis](*)** (this dashboard)  \n   Provides a quick, high-level cost analysis across all compute types. While ideal for immediate insights into spending patterns, users seeking deeper, more specific analysis may refer to the other dashboards below.\n\n2. **[[System Tables] Job Operations and Cost Management](*)**  \n   Delivers detailed insights into job costs, operational metrics, and cluster performance across Databricks workspaces. It includes sections on job cost analysis, cost comparisons over time, job efficiency metrics, and cluster resource utilization.\n\n3. **[[System Tables] DBSQL Cost & Query Performance](*)**  \n   Offers in-depth analysis of SQL costs and query performance. Sections cover SQL cost trends, query efficiency, warehouse analysis, and user/team-specific cost allocation, making it an essential tool for database and query optimization.\n\n4. **[[System Tables] Data Lineage and Catalog Utilization](*)**  \n   Focused on data lineage, access patterns, and catalog utilization. This dashboard explores entity-based access, catalog usage trends, and table-specific access metrics to provide a comprehensive view of data flow and user interactions across the workspace."
+            "multilineTextboxSpec": {
+              "lines": [
+                "### Dashboard Index\n",
+                "----\n",
+                "This dashboard provides a central reference for monitoring and analyzing various aspects of data costs, lineage, and jobs across Databricks environments. It includes links to other dashboards for in-depth, specialized analysis:\n",
+                "\n",
+                "1. **[[System Tables] Databricks Unified Cost Analysis](*)** (this dashboard)  \n",
+                "   Provides a quick, high-level cost analysis across all compute types. While ideal for immediate insights into spending patterns, users seeking deeper, more specific analysis may refer to the other dashboards below.\n",
+                "\n",
+                "2. **[[System Tables] Job Operations and Cost Management](*)**  \n",
+                "   Delivers detailed insights into job costs, operational metrics, and cluster performance across Databricks workspaces. It includes sections on job cost analysis, cost comparisons over time, job efficiency metrics, and cluster resource utilization.\n",
+                "\n",
+                "3. **[[System Tables] DBSQL Cost & Query Performance](*)**  \n",
+                "   Offers in-depth analysis of SQL costs and query performance. Sections cover SQL cost trends, query efficiency, warehouse analysis, and user/team-specific cost allocation, making it an essential tool for database and query optimization.\n",
+                "\n",
+                "4. **[[System Tables] Data Lineage and Catalog Utilization](*)**  \n",
+                "   Focused on data lineage, access patterns, and catalog utilization. This dashboard explores entity-based access, catalog usage trends, and table-specific access metrics to provide a comprehensive view of data flow and user interactions across the workspace.\n",
+                "\n",
+                "5. **[[System Tables] Genie Usage Cost Tracking](*)**  \n",
+                "   Tracks billed and free-tier Genie DBU consumption across workspaces, surfaces, and users. Covers daily cost trends, week-over-week growth, cumulative monthly spend, and per-user activity tables for adoption tracking and chargeback attribution.\n",
+                "\n",
+                "6. **[[System Tables] AI & ML Infrastructure Cost](*)**  \n",
+                "   Provides detailed cost tracking for Databricks AI/ML infrastructure products: Lakebase, Model Serving, Vector Search, AI Gateway, and Apps. Covers endpoint-level cost attribution, workspace chargeback, adoption trends, and period-over-period comparisons."
+              ]
+            }
           },
           "position": {
             "x": 0,
             "y": 0,
-            "width": 6,
+            "width": 12,
             "height": 6
           }
         }
-      ]
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
     }
   ]
 }
