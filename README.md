@@ -150,7 +150,7 @@ The dashboards can be updated as data or configurations change over time. The `c
 
 * **Publish Dashboards**: Re-publishes dashboards to the workspace to ensure any updates made to dashboard definitions are reflected. This can be used if manual changes are made and need to be re-deployed across the environment.
 
-* **Refresh Tables**: Rebuilds the `workspace_reference` and `warehouse_reference` tables from the latest system table data. Run this action periodically to capture newly created workspaces and warehouses for accurate reporting.
+* **Create/Refresh Tables**: (Re)creates the `workspace_reference` and `warehouse_reference` views over the system tables. Since they are views, workspace and warehouse names stay current automatically — this action only needs to be re-run if the views are dropped or their definitions change.
 
 In addition to the `create_dashboards` notebook, the `extract_dashboard` notebook is available to capture updates to any dashboards. Since `create_dashboards` deploys dashboards directly from JSON files in the repository, any manual changes made to dashboards in the workspace will be overwritten when `create_dashboards` is re-run.
 
@@ -165,16 +165,16 @@ These actions provide flexibility to maintain and refresh dashboards efficiently
 
 ## Tables and Functions Created During Deployment
 
-As part of the deployment, several tables and functions are created to support data analysis and visualization within the dashboards. These objects are stored in the specified catalog and schema defined during setup.
+As part of the deployment, a few views and functions are created to support data analysis and visualization within the dashboards. These objects are stored in the specified catalog and schema defined during setup.
 
-#### **Tables**
+#### **Views**
 
 1. **`workspace_reference`**  
-   * **Description**: Stores mappings between `workspace_id` and `workspace_name` to display readable names within the dashboards.  
-   * **Usage**: Enables use of workspace names instead of IDs. Populated automatically from the `system.access.workspaces_latest` system table, so no account-level (M2M OAuth) credentials are required.  
+   * **Description**: A view mapping `workspace_id` to `workspace_name` so dashboards can display readable names.  
+   * **Usage**: Defined over the `system.access.workspaces_latest` system table, so workspace names are always current and no account-level (M2M OAuth) credentials are required.  
 2. **`warehouse_reference`**  
-   * **Description**: Contains a mapping between `warehouse_id` and `warehouse_name` to make warehouse references more efficient in dashboard queries.  
-   * **Usage**: Improves dashboard performance by avoiding repeated joins to retrieve warehouse names. Populated from the `system.compute.warehouses` system table, which covers all warehouses across the account. Run the **Create/Refresh Tables** action periodically to pick up newly created warehouses.
+   * **Description**: A view mapping `workspace_id` and `warehouse_id` to `warehouse_name` so dashboards can display readable warehouse names.  
+   * **Usage**: Defined over the `system.compute.warehouses` system table, keeping the most recent name per warehouse (`system.compute.warehouses` stores one row per configuration change). Because it is a view, names stay current automatically with no refresh required.
 
 #### **SQL Functions**
 

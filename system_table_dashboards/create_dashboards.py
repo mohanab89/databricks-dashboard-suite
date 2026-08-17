@@ -240,39 +240,39 @@ def create_sql_functions():
 
 
 def create_update_tables():
-    # Create/update a table mapping workspace id to name from system tables
-    print(f"Creating {catalog}.{schema}.workspace_reference table...")
+    # Create/replace a view mapping workspace id to name from system tables.
+    # workspaces_latest is already one row per workspace, so a plain select is enough.
+    print(f"Creating {catalog}.{schema}.workspace_reference view...")
     spark.sql(
-        f"CREATE TABLE IF NOT EXISTS {catalog}.{schema}.workspace_reference (workspace_id STRING, workspace_name STRING)"
-    )
-    workspace_ref = spark.sql(
-        """SELECT
+        f"""CREATE OR REPLACE VIEW {catalog}.{schema}.workspace_reference AS
+        SELECT
           CAST(workspace_id AS STRING) AS workspace_id,
           workspace_name
         FROM system.access.workspaces_latest"""
     )
-    workspace_ref.write.mode("overwrite").saveAsTable(
-        f"{catalog}.{schema}.workspace_reference"
-    )
-    print(f"Table {catalog}.{schema}.workspace_reference created/updated successfully")
+    print(f"View {catalog}.{schema}.workspace_reference created/updated successfully")
 
-    # Create/update a table mapping warehouse id to name from system tables
-    print(f"Creating {catalog}.{schema}.warehouse_reference table...")
+    # Create/replace a view mapping warehouse id to its latest name from system tables.
+    # system.compute.warehouses keeps one row per config change, so keep the most recent
+    # snapshot per warehouse (by change_time). delete_time is not filtered so deleted
+    # warehouses still resolve to their last known name for historical cost attribution.
+    print(f"Creating {catalog}.{schema}.warehouse_reference view...")
     spark.sql(
-        f"CREATE TABLE IF NOT EXISTS {catalog}.{schema}.warehouse_reference (workspace_id STRING, warehouse_id STRING, warehouse_name STRING)"
+        f"""CREATE OR REPLACE VIEW {catalog}.{schema}.warehouse_reference AS
+        SELECT workspace_id, warehouse_id, warehouse_name
+        FROM (
+          SELECT
+            CAST(workspace_id AS STRING) AS workspace_id,
+            CAST(warehouse_id AS STRING) AS warehouse_id,
+            warehouse_name,
+            ROW_NUMBER() OVER (
+              PARTITION BY workspace_id, warehouse_id ORDER BY change_time DESC
+            ) AS rn
+          FROM system.compute.warehouses
+        )
+        WHERE rn = 1"""
     )
-    warehouse_names = spark.sql(
-        """SELECT
-          CAST(workspace_id AS STRING) AS workspace_id,
-          CAST(warehouse_id AS STRING) AS warehouse_id,
-          MAX(warehouse_name) AS warehouse_name
-        FROM system.compute.warehouses
-        GROUP BY workspace_id, warehouse_id"""
-    )
-    warehouse_names.write.mode("overwrite").saveAsTable(
-        f"{catalog}.{schema}.warehouse_reference"
-    )
-    print(f"Table {catalog}.{schema}.warehouse_reference created/updated successfully")
+    print(f"View {catalog}.{schema}.warehouse_reference created/updated successfully")
 
 # COMMAND ----------
 
