@@ -241,14 +241,24 @@ def create_sql_functions():
 
 def create_update_tables():
     # Create/replace a view mapping workspace id to name from system tables.
-    # workspaces_latest is already one row per workspace, so a plain select is enough.
+    # workspaces_latest is already one row per workspace, but it only lists active
+    # workspaces (cancelled ones are removed). Union in any workspace_id still present
+    # in billing history so its cost rows resolve to at least the id instead of NULL.
     print(f"Creating {catalog}.{schema}.workspace_reference view...")
     spark.sql(
         f"""CREATE OR REPLACE VIEW {catalog}.{schema}.workspace_reference AS
         SELECT
           CAST(workspace_id AS STRING) AS workspace_id,
           workspace_name
-        FROM system.access.workspaces_latest"""
+        FROM system.access.workspaces_latest
+        UNION
+        SELECT DISTINCT
+          CAST(workspace_id AS STRING) AS workspace_id,
+          CAST(workspace_id AS STRING) AS workspace_name
+        FROM system.billing.usage
+        WHERE CAST(workspace_id AS STRING) NOT IN (
+          SELECT CAST(workspace_id AS STRING) FROM system.access.workspaces_latest
+        )"""
     )
     print(f"View {catalog}.{schema}.workspace_reference created/updated successfully")
 

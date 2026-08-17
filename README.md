@@ -171,7 +171,7 @@ As part of the deployment, a few views and functions are created to support data
 
 1. **`workspace_reference`**  
    * **Description**: A view mapping `workspace_id` to `workspace_name` so dashboards can display readable names.  
-   * **Usage**: Defined over the `system.access.workspaces_latest` system table, so workspace names are always current and no account-level (M2M OAuth) credentials are required.  
+   * **Usage**: Defined over the `system.access.workspaces_latest` system table, so workspace names are always current and no account-level (M2M OAuth) credentials are required. Since `workspaces_latest` only lists active workspaces, the view also unions in any `workspace_id` still present in `system.billing.usage`, so cost from cancelled workspaces still resolves to the id instead of a blank name.  
 2. **`warehouse_reference`**  
    * **Description**: A view mapping `workspace_id` and `warehouse_id` to `warehouse_name` so dashboards can display readable warehouse names.  
    * **Usage**: Defined over the `system.compute.warehouses` system table, keeping the most recent name per warehouse (`system.compute.warehouses` stores one row per configuration change). Because it is a view, names stay current automatically with no refresh required.
