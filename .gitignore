@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Editors / IDEs
+.idea/
+.vscode/
+
+# Local AI / agent tooling
+.isaac/
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
