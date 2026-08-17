@@ -13,7 +13,6 @@ dbutils.library.restartPython()
 
 # COMMAND ----------
 
-from databricks.sdk import AccountClient
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service import jobs
 from pyspark.errors import PySparkException
@@ -31,20 +30,12 @@ dbutils.widgets.dropdown('warehouse', warehouse_names[0], choices=warehouse_name
 dbutils.widgets.text('catalog', 'main') # Provide a catalog where you have read/write permissions where required functions will be created. Catalog will be created if not found.
 dbutils.widgets.text('schema', 'default') # Provide a schema where you have read/write permissions where required functions will be created. Schema will be created if not found.
 dbutils.widgets.text('tags_to_consider_for_team_name', 'team_name,group') # Provide a comma separated list of tags that should be considered for getting team names
-dbutils.widgets.text('account_host', 'https://accounts.cloud.databricks.com/') # Provide the host for account console
-dbutils.widgets.text('account_id', '') # Provide the account identifier from account console
-dbutils.widgets.text('client_id', '') # Provide a M2M client ID for authenticating to account level access
-dbutils.widgets.text('client_secret', '') # Provide a M2M client secret for authenticating to account level
 
 # COMMAND ----------
 
 actions = dbutils.widgets.get('actions')
 catalog = dbutils.widgets.get('catalog')
 schema = dbutils.widgets.get('schema')
-account_host = dbutils.widgets.get('account_host')
-account_id = dbutils.widgets.get('account_id')
-client_id = dbutils.widgets.get('client_id')
-client_secret = dbutils.widgets.get('client_secret')
 tags_to_consider_for_team_name = dbutils.widgets.get('tags_to_consider_for_team_name')
 warehouse = dbutils.widgets.get('warehouse')
 warehouse_id = warehouse.split("(")[1].split(")")[0]
@@ -63,8 +54,6 @@ spark.sql(f'CREATE SCHEMA IF NOT EXISTS {catalog}.{schema}')
 import json
 from pathlib import Path
 import os
-from pyspark.sql.types import StringType
-from pyspark.sql.functions import col
 from databricks.sdk.service.dashboards import Dashboard
 
 # List all the JSON files from the current folder
@@ -250,74 +239,35 @@ def create_sql_functions():
 
 
 def create_update_tables():
-    # Programatically create/update a table for workspace id to name mapping
+    # Create/update a table mapping workspace id to name from system tables
     print(f"Creating {catalog}.{schema}.workspace_reference table...")
     spark.sql(
         f"CREATE TABLE IF NOT EXISTS {catalog}.{schema}.workspace_reference (workspace_id STRING, workspace_name STRING)"
     )
-    try:
-        a = AccountClient(
-            host=account_host,
-            account_id=account_id,
-            client_id=client_id,
-            client_secret=client_secret,
-        )
-        workspaces = [
-            [workspace.workspace_id, workspace.workspace_name]
-            for workspace in a.workspaces.list()
-        ]
-        workspace_ref = spark.createDataFrame(
-            workspaces, ["workspace_id", "workspace_name"]
-        )
-        workspace_ref = workspace_ref.withColumn("workspace_id", col("workspace_id").cast(StringType()))
-        workspace_ref.createOrReplaceTempView('workspace_ref')
-        workspace_ref = spark.sql(
-            f"""SELECT * FROM workspace_ref
-            UNION
-            select distinct workspace_id, workspace_id as workspace_name from system.billing.usage
-            WHERE workspace_id NOT IN (SELECT workspace_id FROM workspace_ref)"""
-        )
-    except Exception as e:
-        print("\t Creating default workspace_reference table.")
-        workspace_ref = spark.sql(
-            f"""SELECT * FROM {catalog}.{schema}.workspace_reference
-            UNION
-            select distinct workspace_id, workspace_id as workspace_name from system.billing.usage
-            WHERE workspace_id NOT IN (SELECT workspace_id FROM {catalog}.{schema}.workspace_reference)"""
-        )
-
+    workspace_ref = spark.sql(
+        """SELECT
+          CAST(workspace_id AS STRING) AS workspace_id,
+          workspace_name
+        FROM system.access.workspaces_latest"""
+    )
     workspace_ref.write.mode("overwrite").saveAsTable(
         f"{catalog}.{schema}.workspace_reference"
     )
     print(f"Table {catalog}.{schema}.workspace_reference created/updated successfully")
 
-    # Programatically create/update a table for warehouse id to name mapping
+    # Create/update a table mapping warehouse id to name from system tables
     print(f"Creating {catalog}.{schema}.warehouse_reference table...")
     spark.sql(
         f"CREATE TABLE IF NOT EXISTS {catalog}.{schema}.warehouse_reference (workspace_id STRING, warehouse_id STRING, warehouse_name STRING)"
     )
     warehouse_names = spark.sql(
-        f"""WITH warehouse_names AS (
-              SELECT
-                workspace_id,
-                GET_JSON_OBJECT(response.result, '$.id') AS warehouse_id,
-                max(request_params.name) AS warehouse_name
-              from
-                system.access.audit
-              WHERE
-                service_name = 'databrickssql'
-              group by
-                workspace_id,
-                GET_JSON_OBJECT(response.result, '$.id')
-            ),
-            union_warehouses AS (
-              SELECT * FROM warehouse_names
-              UNION
-              SELECT * FROM {catalog}.{schema}.warehouse_reference
-            )
-            SELECT * FROM union_warehouses"""
+        """SELECT
+          CAST(workspace_id AS STRING) AS workspace_id,
+          CAST(warehouse_id AS STRING) AS warehouse_id,
+          MAX(warehouse_name) AS warehouse_name
+        FROM system.compute.warehouses
+        GROUP BY workspace_id, warehouse_id"""
     )
-
     warehouse_names.write.mode("overwrite").saveAsTable(
         f"{catalog}.{schema}.warehouse_reference"
     )

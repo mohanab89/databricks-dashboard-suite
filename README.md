@@ -140,16 +140,6 @@ In your workspace, open the `create_dashboards` notebook. This notebook is desig
     * If clusters are tagged with `team_name:<name of team>`, enter `team_name`.  
     * If multiple tag keys are used (e.g., `team_name` for some clusters and `group_name` for others), provide both keys, such as `team_name,group_name`. This setup ensures that all relevant teams are accurately captured in the dashboards.
 
-**Account API [Optional] Parameters**  
-These parameters are only required if you want **workspace names** (instead of workspace IDs) to display within the dashboards. The dashboards are built using system tables, which currently store only workspace IDs. These parameters allow the dashboards to connect to the account console to retrieve workspace names via the Databricks Account API. Note that account-level access (using M2M OAuth) is required to populate the **workspace\_reference** table with workspace names. [How to get these?](https://docs.databricks.com/en/dev-tools/auth/index.html#how-do-i-use-oauth-to-authenticate-with-databricks)
-
-* **`account_host`**: The URL of the Databricks account host.  
-* **`account_id`**: The identifier for the Databricks account.  
-* **`client_id`**: The client ID of the Databricks service principal, used for machine-to-machine (M2M) authentication.  
-* **`client_secret`**: The client secret for the Databricks service principal, required for M2M authentication.
-
-If these parameters are left blank, the **workspace\_reference** table will be created without workspace names, with workspace IDs populated in the `workspace_name` column instead. For those without account console access, workspace names can be manually added to the `workspace_reference` table later, allowing the dashboards to display workspace names where desired.
-
 ### Complete Deployment
 
 Once all parameters are configured, run the `create_dashboards` notebook on a **Unity Catalog (UC) supported cluster** (serverless is recommended). Running the notebook will deploy all dashboards, which will then be available for use under the **Dashboards** section in your workspace. Click on the `[System Tables] Databricks Unified Cost Analysis Dahsboard`. This will contain links to the other dashboards.
@@ -160,7 +150,7 @@ The dashboards can be updated as data or configurations change over time. The `c
 
 * **Publish Dashboards**: Re-publishes dashboards to the workspace to ensure any updates made to dashboard definitions are reflected. This can be used if manual changes are made and need to be re-deployed across the environment.
 
-* **Refresh Tables**: Ensures that reference tables, such as workspace_reference and warehouse_reference, are current. Running this action periodically is essential to capture new or updated warehouse names and workspace details for accurate reporting.
+* **Refresh Tables**: Rebuilds the `workspace_reference` and `warehouse_reference` tables from the latest system table data. Run this action periodically to capture newly created workspaces and warehouses for accurate reporting.
 
 In addition to the `create_dashboards` notebook, the `extract_dashboard` notebook is available to capture updates to any dashboards. Since `create_dashboards` deploys dashboards directly from JSON files in the repository, any manual changes made to dashboards in the workspace will be overwritten when `create_dashboards` is re-run.
 
@@ -181,10 +171,10 @@ As part of the deployment, several tables and functions are created to support d
 
 1. **`workspace_reference`**  
    * **Description**: Stores mappings between `workspace_id` and `workspace_name` to display readable names within the dashboards.  
-   * **Usage**: Enables use of workspace names instead of IDs. If account-level access parameters are provided, this table is populated automatically with workspace names. Otherwise, `workspace_id` will be used in place of `workspace_name`, with the option for users to manually update commonly used workspaces.  
+   * **Usage**: Enables use of workspace names instead of IDs. Populated automatically from the `system.access.workspaces_latest` system table, so no account-level (M2M OAuth) credentials are required.  
 2. **`warehouse_reference`**  
    * **Description**: Contains a mapping between `warehouse_id` and `warehouse_name` to make warehouse references more efficient in dashboard queries.  
-   * **Usage**: Improves dashboard performance by avoiding frequent joins with `system.access.audit` to retrieve warehouse names. The `audit` tables cover only the last year and track warehouses within the current workspace, potentially missing older warehouse names or those from other workspaces in the account. To keep this table updated with new warehouse names, users should frequently run the **Create/Refresh Tables** action in the `create_dashboards` notebook. Once system tables include warehouse names (future roadmap), this reference table will no longer be necessary.
+   * **Usage**: Improves dashboard performance by avoiding repeated joins to retrieve warehouse names. Populated from the `system.compute.warehouses` system table, which covers all warehouses across the account. Run the **Create/Refresh Tables** action periodically to pick up newly created warehouses.
 
 #### **SQL Functions**
 
