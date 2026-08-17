@@ -89,36 +89,37 @@ def deploy_dashboards():
 
         dash_name = json_file.split(".")[0]
 
+        # Create the dashboard if it does not exist yet, otherwise fetch its id
         try:
-            # Update if the dashboard exists
             dashboard_id = w.workspace.get_status(
                 f"{dashboard_save_path}/{json_file}"
             ).resource_id
-            curr_dash = w.lakeview.get(dashboard_id)
-            curr_dash.serialized_dashboard = replaced_data
-            dash_updated = w.lakeview.update(
-                dashboard_id=dashboard_id,
-                dashboard=curr_dash,
-            )
-            print(
-                f'Dashboard "{dash_name}" updated successfully at {dash_updated.create_time}'
-            )
+            created_time = None
         except Exception as e:
-            # Create a new dashboard if it doesn't exist
-            if "doesn't exist" in str(e):
-                new_dash = Dashboard(
-                    display_name=dash_name,
-                    parent_path=dashboard_save_path,
-                    serialized_dashboard=replaced_data,
-                    warehouse_id=warehouse_id)
-                dash_created = w.lakeview.create(dashboard=new_dash)
-                dashboard_id = dash_created.dashboard_id
-                print(
-                    f'Dashboard "{dash_name}" created successfully at {dash_created.create_time}'
-                )
-            else:
+            if "doesn't exist" not in str(e):
                 raise e
+            new_dash = Dashboard(
+                display_name=dash_name,
+                parent_path=dashboard_save_path,
+                serialized_dashboard=replaced_data,
+                warehouse_id=warehouse_id)
+            dash_created = w.lakeview.create(dashboard=new_dash)
+            dashboard_id = dash_created.dashboard_id
+            created_time = dash_created.create_time
 
+        # Resolve in-dashboard page links now that the dashboard id is known.
+        # The intro markdown uses "__PAGE__/<page_name>" placeholders so the links
+        # survive the extract/deploy round-trip without hardcoding the dashboard id.
+        page_base = f"{host_url}/dashboardsv3/{dashboard_id}/published/pages/"
+        linked_data = replaced_data.replace("__PAGE__/", page_base)
+        curr_dash = w.lakeview.get(dashboard_id)
+        curr_dash.serialized_dashboard = linked_data
+        dash_updated = w.lakeview.update(dashboard_id=dashboard_id, dashboard=curr_dash)
+
+        action = "created" if created_time else "updated"
+        print(
+            f'Dashboard "{dash_name}" {action} successfully at {created_time or dash_updated.create_time}'
+        )
         print(f"{host_url}/dashboardsv3/{dashboard_id}/published")
 
 

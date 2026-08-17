@@ -68,6 +68,14 @@ def extract_dashboard(selected_dashboard, catalog, schema):
     replaced_dash = dash_details.replace(f"{catalog}", "{catalog}").replace(
         f"{schema}", "{schema}"
     )
+    # Re-tokenize in-dashboard page links back to __PAGE__/<page_name> placeholders so the
+    # dashboard id is not hardcoded in the repo. Must run before the generic URL stripping
+    # below (which would otherwise swallow the /pages/<page_name> segment).
+    replaced_dash = re.sub(
+        r'https?://[^\s)"]+?/published/pages/([^\s)"?]+)(?:\?[^\s)"]*)?',
+        r"__PAGE__/\1",
+        replaced_dash,
+    )
     urls = re.findall(r"https?://[^\s)]+?/dashboard[^\s)]+?/published[^\s)]*", replaced_dash)
     for url in urls:
         replaced_dash = replaced_dash.replace(f"{url}", "*")

@@ -5764,14 +5764,14 @@
               "lines": [
                 "### Databricks Cost & Usage Suite\n",
                 "----\n",
-                "A single dashboard for monitoring cost, performance, lineage, and usage across your Databricks account, built on Databricks system tables. Use the page tabs above to navigate:\n",
+                "A single dashboard for monitoring cost, performance, lineage, and usage across your Databricks account, built on Databricks system tables. Use the page tabs above, or the links below, to navigate:\n",
                 "\n",
-                "- **Unified Cost Analysis** \u2013 high-level spend across all compute types.\n",
-                "- **Job Operations & Cost** \u2013 job costs, failures, and cluster efficiency.\n",
-                "- **DBSQL Cost & Query Performance** \u2013 SQL warehouse cost and query performance.\n",
-                "- **Data Lineage & Catalog Utilization** \u2013 access patterns and catalog usage.\n",
-                "- **AI & ML Infrastructure Cost** \u2013 Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.\n",
-                "- **Genie Usage Cost Tracking** \u2013 billed vs. free Genie consumption and user activity."
+                "- **[Unified Cost Analysis](__PAGE__/unified_3c10256d)** \u2013 high-level spend across all compute types.\n",
+                "- **[Job Operations & Cost](__PAGE__/jobs_3c10256d)** \u2013 job costs, failures, and cluster efficiency.\n",
+                "- **[DBSQL Cost & Query Performance](__PAGE__/dbsql_3c10256d)** \u2013 SQL warehouse cost and query performance.\n",
+                "- **[Data Lineage & Catalog Utilization](__PAGE__/lineage_3c10256d)** \u2013 access patterns and catalog usage.\n",
+                "- **[AI & ML Infrastructure Cost](__PAGE__/aiml_055d8ed3)** \u2013 Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.\n",
+                "- **[Genie Usage Cost Tracking](__PAGE__/genie_1d9ea6da)** \u2013 billed vs. free Genie consumption and user activity."
               ]
             }
           },
