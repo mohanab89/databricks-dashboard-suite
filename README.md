@@ -59,22 +59,22 @@ This repository contains a suite of analytics dashboards for Databricks environm
    * **Catalog and Team Usage** – Catalog usage by teams and entity types.
    * **Table Access Details** – Includes access frequency by entity, user-level access, and upstream/downstream table lineage.
 
-5. **[AI & ML Infrastructure Cost Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20AI%20&%20ML%20Infrastructure%20Cost.lvdash.json)**  
-   Focuses on the cost of AI/ML and serverless infrastructure products – Model Serving, Vector Search, AI Gateway, Lakebase, and Databricks Apps. Useful for tracking GenAI/ML platform spend and adoption:
-   * **Daily Cost by Product** – Spend trends across Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.
-   * **Cost by Endpoint and Application** – Attributes cost to individual serving endpoints and apps.
-   * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
-   * **New vs. Existing Endpoints** – Tracks newly introduced endpoints and apps over the last 30 days.
-   * **Lakebase Compute vs. Storage** – Splits Lakebase spend into compute and storage.
-   * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
-
-6. **[Genie Usage Cost Tracking Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Genie%20Usage%20Cost%20Tracking.lvdash.json)**  
+5. **[Genie Usage Cost Tracking Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Genie%20Usage%20Cost%20Tracking.lvdash.json)**  
    Focuses on Databricks Genie usage and cost, including free vs. billed consumption and user-level activity:
    * **Free vs. Billed DBUs** – Compares free and billed Genie consumption.
    * **Daily Billed Cost** – Cost trends by SKU, surface, and channel.
    * **Cost by User and Surface** – Attributes billed cost to users, surfaces, and channels.
    * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
    * **User Activity** – Active days and average daily cost per user.
+   * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
+
+6. **[AI & ML Infrastructure Cost Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20AI%20&%20ML%20Infrastructure%20Cost.lvdash.json)**  
+   Focuses on the cost of AI/ML and serverless infrastructure products – Model Serving, Vector Search, AI Gateway, Lakebase, and Databricks Apps. Useful for tracking GenAI/ML platform spend and adoption:
+   * **Daily Cost by Product** – Spend trends across Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.
+   * **Cost by Endpoint and Application** – Attributes cost to individual serving endpoints and apps.
+   * **30-Day vs. Prior 30-Day Spend & Week-over-Week Growth** – Period-over-period cost change.
+   * **New vs. Existing Endpoints** – Tracks newly introduced endpoints and apps over the last 30 days.
+   * **Lakebase Compute vs. Storage** – Splits Lakebase spend into compute and storage.
    * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
 
 ![Sample Dashboard](sample_screenshot_1.png)
@@ -88,8 +88,8 @@ This repository contains a suite of analytics dashboards for Databricks environm
 │   ├── [System Tables] Job Operations and Cost Management.lvdash.json      # Code for Job Operations and Cost Management Dashboard  
 │   ├── [System Tables] DBSQL Cost & Query Performance.lvdash.json          # Code for DBSQL Cost & Query Performance Dashboard  
 │   ├── [System Tables] Data Lineage and Catalog Utilization.lvdash.json    # Code for Data Lineage and Catalog Utilization Dashboard  
-│   ├── [System Tables] AI & ML Infrastructure Cost.lvdash.json             # Code for AI & ML Infrastructure Cost Dashboard  
 │   ├── [System Tables] Genie Usage Cost Tracking.lvdash.json               # Code for Genie Usage Cost Tracking Dashboard  
+│   ├── [System Tables] AI & ML Infrastructure Cost.lvdash.json             # Code for AI & ML Infrastructure Cost Dashboard  
 │   ├── create_dashboards.ipynb                                             # Python code to deploy the dashboards to your Databricks  
 └── └── extract_dashboard  .ipynb                                           # Python code to extract a specific dashboard
 ```
