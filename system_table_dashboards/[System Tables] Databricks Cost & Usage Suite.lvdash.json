@@ -5764,14 +5764,25 @@
               "lines": [
                 "### Databricks Cost & Usage Suite\n",
                 "----\n",
-                "A single dashboard for monitoring cost, performance, lineage, and usage across your Databricks account, built on Databricks system tables. Use the page tabs above, or the links below, to navigate:\n",
+                "This dashboard provides a central reference for monitoring and analyzing various aspects of data costs, lineage, and usage across Databricks environments. Use the links below, or the page tabs above, for in-depth, specialized analysis:\n",
                 "\n",
-                "- **[Unified Cost Analysis](__PAGE__/unified_3c10256d)** \u2013 high-level spend across all compute types.\n",
-                "- **[Job Operations & Cost](__PAGE__/jobs_3c10256d)** \u2013 job costs, failures, and cluster efficiency.\n",
-                "- **[DBSQL Cost & Query Performance](__PAGE__/dbsql_3c10256d)** \u2013 SQL warehouse cost and query performance.\n",
-                "- **[Data Lineage & Catalog Utilization](__PAGE__/lineage_3c10256d)** \u2013 access patterns and catalog usage.\n",
-                "- **[AI & ML Infrastructure Cost](__PAGE__/aiml_055d8ed3)** \u2013 Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.\n",
-                "- **[Genie Usage Cost Tracking](__PAGE__/genie_1d9ea6da)** \u2013 billed vs. free Genie consumption and user activity."
+                "1. **[[System Tables] Databricks Unified Cost Analysis](__PAGE__/unified_3c10256d)** (this page)  \n",
+                "   Provides a quick, high-level cost analysis across all compute types. While ideal for immediate insights into spending patterns, users seeking deeper, more specific analysis may refer to the other pages below.\n",
+                "\n",
+                "2. **[[System Tables] Job Operations and Cost Management](__PAGE__/jobs_3c10256d)**  \n",
+                "   Delivers detailed insights into job costs, operational metrics, and cluster performance across Databricks workspaces. It includes sections on job cost analysis, cost comparisons over time, job efficiency metrics, and cluster resource utilization.\n",
+                "\n",
+                "3. **[[System Tables] DBSQL Cost & Query Performance](__PAGE__/dbsql_3c10256d)**  \n",
+                "   Offers in-depth analysis of SQL costs and query performance. Sections cover SQL cost trends, query efficiency, warehouse analysis, and user/team-specific cost allocation, making it an essential tool for database and query optimization.\n",
+                "\n",
+                "4. **[[System Tables] Data Lineage and Catalog Utilization](__PAGE__/lineage_3c10256d)**  \n",
+                "   Focused on data lineage, access patterns, and catalog utilization. This page explores entity-based access, catalog usage trends, and table-specific access metrics to provide a comprehensive view of data flow and user interactions across the workspace.\n",
+                "\n",
+                "5. **[[System Tables] Genie Usage Cost Tracking](__PAGE__/genie_1d9ea6da)**  \n",
+                "   Tracks billed and free-tier Genie DBU consumption across workspaces, surfaces, and users. Covers daily cost trends, week-over-week growth, cumulative monthly spend, and per-user activity tables for adoption tracking and chargeback attribution.\n",
+                "\n",
+                "6. **[[System Tables] AI & ML Infrastructure Cost](__PAGE__/aiml_055d8ed3)**  \n",
+                "   Provides detailed cost tracking for Databricks AI/ML infrastructure products: Lakebase, Model Serving, Vector Search, AI Gateway, and Apps. Covers endpoint-level cost attribution, workspace chargeback, adoption trends, and period-over-period comparisons."
               ]
             }
           },
