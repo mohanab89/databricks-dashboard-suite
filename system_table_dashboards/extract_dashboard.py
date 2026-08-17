@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC ## Instructions
 # MAGIC - Attach notebook to a cluster (Serverless preferred).
-# MAGIC - Run Cells 2, 3 and 4 for the input widget parameters to get polpulated.
+# MAGIC - Run the setup cells above to populate the widget dropdowns.
 # MAGIC - Fill in the parameters. Select the dashboard to extract and provide the catalog and schema that were used while deploying the dashboards.
 # MAGIC - Run the rest of the notebook to extract the dashboard json into the current directory.
 

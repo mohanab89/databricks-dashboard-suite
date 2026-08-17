@@ -2,7 +2,8 @@
 # MAGIC %md
 # MAGIC ## Instructions
 # MAGIC - Attach notebook to a cluster (Serverless preferred).
-# MAGIC - Run Cells 2, 3 and 4 for the input widget parameters to get polpulated.
+# MAGIC - Requires the `system.access` and `system.compute` system schemas to be enabled — `workspace_reference` and `warehouse_reference` are built from `system.access.workspaces_latest` and `system.compute.warehouses`.
+# MAGIC - Run the setup cells above to populate the widget dropdowns.
 # MAGIC - Fill in the parameters. Details on these parameters can be found [here](https://github.com/mohanab89/databricks-dashboard-suite#run-the-create_dashboards-notebook).
 # MAGIC - Run the rest of the notebook to deploy dashboards.
 
