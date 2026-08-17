@@ -3,7 +3,7 @@
 <!-- TOC -->
 * [Databricks Dashboard Suite](#databricks-dashboard-suite)
   * [Overview](#overview)
-  * [Dashboards Included](#dashboards-included)
+  * [Dashboard Pages](#dashboard-pages)
   * [Repository Structure](#repository-structure)
   * [Setup and Usage](#setup-and-usage)
     * [[Option 1] Using Databricks Git folders (Repos)](#option-1-using-databricks-git-folders-repos)
@@ -12,7 +12,7 @@
     * [Complete Deployment](#complete-deployment)
   * [Updating Dashboards](#updating-dashboards)
   * [Tables and Functions Created During Deployment](#tables-and-functions-created-during-deployment)
-      * [**Tables**](#tables)
+      * [**Views**](#views)
       * [**SQL Functions**](#sql-functions)
   * [Conclusion](#conclusion)
     * [Disclaimer](#disclaimer)
@@ -20,21 +20,22 @@
 
 ## Overview
 
-This repository contains a suite of analytics dashboards for Databricks environments, designed to provide detailed insights into cost allocation, performance metrics, data lineage, compute efficiency, and the cost of AI/ML and Genie workloads. These dashboards, built using the [Databricks System Tables](https://docs.databricks.com/en/admin/system-tables/index.html), support efficient management of resources across workspaces, entities, and teams within Databricks, offering both high-level overviews and in-depth analysis tools.
+This repository contains a single, multi-page analytics dashboard for Databricks environments, designed to provide detailed insights into cost allocation, performance metrics, data lineage, compute efficiency, and the cost of AI/ML and Genie workloads. Built using the [Databricks System Tables](https://docs.databricks.com/en/admin/system-tables/index.html), it supports efficient management of resources across workspaces, entities, and teams within Databricks, offering both high-level overviews and in-depth analysis tools.
 
 
-## Dashboards Included
+## Dashboard Pages
 
-1. **[Databricks Unified Cost Analysis Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Databricks%20Unified%20Cost%20Analysis.lvdash.json)**  
+The suite is delivered as a single multi-page dashboard — **[[System Tables] Databricks Cost & Usage Suite](system_table_dashboards/%5BSystem%20Tables%5D%20Databricks%20Cost%20&%20Usage%20Suite.lvdash.json)**. Navigate between the following pages using the tabs at the top of the dashboard:
+
+1. **Unified Cost Analysis**  
    Focuses on overall cost distribution across various compute types, such as all-purpose clusters, Delta Live Tables (DLT), jobs, model inference, and SQL. Ideal for quick cost insights, it includes:  
    * **Daily Spend per Compute Type Over Time** – Visualizes cost trends for each compute type (e.g., SQL, Jobs, DLT, model inference).
    * **Spend Comparison** – Shows spend in the last 30 days vs. the previous 30 days.
    * **Weekly Cost Change Percentage** – Displays week-over-week cost fluctuations.
    * **Daily Spend by Workspace** – Breaks down costs per workspace.
-   * **Cost by Compute Type and Workspace** – Analyzes the most recent 30-day spend by each compute type and workspace.  
-   For in-depth, segmented analysis, check the specific dashboards below.
+   * **Cost by Compute Type and Workspace** – Analyzes the most recent 30-day spend by each compute type and workspace.
 
-2. **[Job Operations and Cost Management Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Job%20Operations%20and%20Cost%20Management.lvdash.json)**  
+2. **Job Operations & Cost**  
    Analyzes job-related costs, operational efficiency, and cluster resource utilization. This dashboard helps monitor job performance, manage cluster costs, and identify high-cost jobs:
    * **Daily Cost by Workspace and SKU** – Monitors daily job-related costs across workspaces.
    * **Cost by Team and User Allocation** – Allocates costs by team and user.
@@ -42,7 +43,7 @@ This repository contains a suite of analytics dashboards for Databricks environm
    * **Most expensive and Failing Jobs** – Identifies expensive, highest-failure, and most retried jobs over time.
    * **Cluster Performance Analysis** – Shows memory and CPU utilization, outdated DBR usage, and job counts with fixed workers or all-purpose compute.
 
-3. **[DBSQL Cost & Query Performance Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20DBSQL%20Cost%20&%20Query%20Performance.lvdash.json)**  
+3. **DBSQL Cost & Query Performance**  
    Designed for SQL workloads, this dashboard provides in-depth analysis of SQL costs, query performance, and warehouse efficiency. It helps in tracking SQL usage by team and workspace:
    * **Daily Cost by Workspace and SKU** – Tracks daily SQL costs per workspace.
    * **Cost by Team and User Allocation** – Attributes costs by teams and users.
@@ -51,7 +52,7 @@ This repository contains a suite of analytics dashboards for Databricks environm
    * **Query Count and Run Time Analysis** – Analysis of query counts, run times, queue times, and breakdowns by statement type and source app.
    * **Warehouse Utilization** – Insights on warehouse counts, cluster activity times, and query spills.
 
-4. **[Data Lineage and Catalog Utilization Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Data%20Lineage%20and%20Catalog%20Utilization.lvdash.json)**
+4. **Data Lineage & Catalog Utilization**
    Provides insights into data lineage, usage patterns, and catalog utilization. It supports data governance efforts by showing entity access, catalog trends, and table-specific access and lineage:
    * **Table vs. Path Access** – Access patterns across various entities.
    * **Active User Distribution** – Pie chart showing active users.
@@ -59,7 +60,7 @@ This repository contains a suite of analytics dashboards for Databricks environm
    * **Catalog and Team Usage** – Catalog usage by teams and entity types.
    * **Table Access Details** – Includes access frequency by entity, user-level access, and upstream/downstream table lineage.
 
-5. **[Genie Usage Cost Tracking Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20Genie%20Usage%20Cost%20Tracking.lvdash.json)**  
+5. **Genie Usage Cost Tracking**  
    Focuses on Databricks Genie usage and cost, including free vs. billed consumption and user-level activity:
    * **Free vs. Billed DBUs** – Compares free and billed Genie consumption.
    * **Daily Billed Cost** – Cost trends by SKU, surface, and channel.
@@ -68,7 +69,7 @@ This repository contains a suite of analytics dashboards for Databricks environm
    * **User Activity** – Active days and average daily cost per user.
    * **Monthly Cumulative Spend** – Current vs. prior month cumulative cost.
 
-6. **[AI & ML Infrastructure Cost Dashboard](system_table_dashboards/%5BSystem%20Tables%5D%20AI%20&%20ML%20Infrastructure%20Cost.lvdash.json)**  
+6. **AI & ML Infrastructure Cost**  
    Focuses on the cost of AI/ML and serverless infrastructure products – Model Serving, Vector Search, AI Gateway, Lakebase, and Databricks Apps. Useful for tracking GenAI/ML platform spend and adoption:
    * **Daily Cost by Product** – Spend trends across Model Serving, Vector Search, AI Gateway, Lakebase, and Apps.
    * **Cost by Endpoint and Application** – Attributes cost to individual serving endpoints and apps.
@@ -84,13 +85,8 @@ This repository contains a suite of analytics dashboards for Databricks environm
 ```plaintext  
 ├── README.md                                                               # Project overview and documentation  
 ├── system_table_dashboards                                                 # Folder containing all dashboards and code  
-│   ├── [System Tables] Databricks Unified Cost Analysis.lvdash.json        # Code for Databricks Unified Cost Analysis Dashboard  
-│   ├── [System Tables] Job Operations and Cost Management.lvdash.json      # Code for Job Operations and Cost Management Dashboard  
-│   ├── [System Tables] DBSQL Cost & Query Performance.lvdash.json          # Code for DBSQL Cost & Query Performance Dashboard  
-│   ├── [System Tables] Data Lineage and Catalog Utilization.lvdash.json    # Code for Data Lineage and Catalog Utilization Dashboard  
-│   ├── [System Tables] Genie Usage Cost Tracking.lvdash.json               # Code for Genie Usage Cost Tracking Dashboard  
-│   ├── [System Tables] AI & ML Infrastructure Cost.lvdash.json             # Code for AI & ML Infrastructure Cost Dashboard  
-│   ├── create_dashboards.py                                                # Python code to deploy the dashboards to your Databricks  
+│   ├── [System Tables] Databricks Cost & Usage Suite.lvdash.json           # The single multi-page dashboard (all six pages)  
+│   ├── create_dashboards.py                                                # Python code to deploy the dashboard to your Databricks  
 └── └── extract_dashboard.py                                                # Python code to extract a specific dashboard
 ```
 ## Setup and Usage
@@ -142,22 +138,22 @@ In your workspace, open the `create_dashboards` notebook. This notebook is desig
 
 ### Complete Deployment
 
-Once all parameters are configured, run the `create_dashboards` notebook on a **Unity Catalog (UC) supported cluster** (serverless is recommended). Running the notebook will deploy all dashboards, which will then be available for use under the **Dashboards** section in your workspace. Click on the `[System Tables] Databricks Unified Cost Analysis Dahsboard`. This will contain links to the other dashboards.
+Once all parameters are configured, run the `create_dashboards` notebook on a **Unity Catalog (UC) supported cluster** (serverless is recommended). Running the notebook will deploy the dashboard, which will then be available under the **Dashboards** section in your workspace. Open the `[System Tables] Databricks Cost & Usage Suite` dashboard and use the page tabs at the top to navigate between the six pages.
 
 ## Updating Dashboards
 
-The dashboards can be updated as data or configurations change over time. The `create_dashboards` notebook provides multiple actions that can be used on an ad-hoc basis to refresh or maintain your dashboards:
+The dashboard can be updated as data or configurations change over time. The `create_dashboards` notebook provides multiple actions that can be used on an ad-hoc basis to refresh or maintain your dashboard:
 
-* **Publish Dashboards**: Re-publishes dashboards to the workspace to ensure any updates made to dashboard definitions are reflected. This can be used if manual changes are made and need to be re-deployed across the environment.
+* **Publish Dashboards**: Re-publishes the dashboard to the workspace to ensure any updates made to the dashboard definition are reflected. This can be used if manual changes are made and need to be re-deployed across the environment.
 
 * **Create/Refresh Tables**: (Re)creates the `workspace_reference` and `warehouse_reference` views over the system tables. Since they are views, workspace and warehouse names stay current automatically — this action only needs to be re-run if the views are dropped or their definitions change.
 
-In addition to the `create_dashboards` notebook, the `extract_dashboard` notebook is available to capture updates to any dashboards. Since `create_dashboards` deploys dashboards directly from JSON files in the repository, any manual changes made to dashboards in the workspace will be overwritten when `create_dashboards` is re-run.
+In addition to the `create_dashboards` notebook, the `extract_dashboard` notebook is available to capture updates to the dashboard. Since `create_dashboards` deploys the dashboard directly from the JSON file in the repository, any manual changes made in the workspace will be overwritten when `create_dashboards` is re-run.
 
 Use the **`extract_dashboard`** notebook to capture these changes:
 
-* If any manual change is made in any of the dashboards, run the **`extract_dashboard`** notebook selecting that specific dashboard as a parameter.  
-* This notebook extracts the latest version of any dashboard in the workspace and saves it back to the corresponding JSON file.  
+* After making manual changes in the workspace, run the **`extract_dashboard`** notebook and select the dashboard as a parameter.  
+* This notebook extracts the latest version of the dashboard from the workspace and saves it back to the JSON file.  
 * Running `extract_dashboard` ensures that future deployments with `create_dashboards` will include all manual modifications, preventing loss of updates. 
 
 These actions provide flexibility to maintain and refresh dashboards efficiently, helping keep visualizations aligned with the latest data and configurations.

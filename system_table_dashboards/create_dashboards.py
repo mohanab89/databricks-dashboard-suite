@@ -79,7 +79,7 @@ def list_json_dash_files():
 def deploy_dashboards():
     # Get all JSON files in the current folder
     json_files, dashboard_save_path = list_json_dash_files()
-    dash_name_id_dict = {}
+    host_url = f"https://{spark.conf.get('spark.databricks.workspaceUrl')}"
 
     # Process each JSON
     for json_file in json_files:
@@ -103,7 +103,6 @@ def deploy_dashboards():
             print(
                 f'Dashboard "{dash_name}" updated successfully at {dash_updated.create_time}'
             )
-            dash_name_id_dict[dash_name] = dashboard_id
         except Exception as e:
             # Create a new dashboard if it doesn't exist
             if "doesn't exist" in str(e):
@@ -117,42 +116,10 @@ def deploy_dashboards():
                 print(
                     f'Dashboard "{dash_name}" created successfully at {dash_created.create_time}'
                 )
-                dash_name_id_dict[dash_name] = dashboard_id
             else:
                 raise e
 
-    # Update URLs in the index dashboard
-    for json_file in json_files:
-        if "Databricks" in json_file:
-            with open(json_file, "r") as file:
-                data = file.read().rstrip()
-            replaced_data = data.replace("{catalog}", catalog).replace(
-                "{schema}", schema
-            )
-
-            host_url = f"https://{spark.conf.get('spark.databricks.workspaceUrl')}"
-
-            for dash_name, dashboard_id in dash_name_id_dict.items():
-                str_to_replace = f"**[{dash_name}](*)**"
-                to_replace_with = f"**[{dash_name}]({host_url}/dashboardsv3/{dashboard_id}/published)**"
-                replaced_data = replaced_data.replace(
-                    f"{str_to_replace}", f"{to_replace_with}"
-                )
-
-            dashboard_id = w.workspace.get_status(
-                f"{dashboard_save_path}/{json_file}"
-            ).resource_id
-            curr_dash = w.lakeview.get(dashboard_id)
-            curr_dash.serialized_dashboard = replaced_data
-            dash_updated = w.lakeview.update(
-                dashboard_id=dashboard_id,
-                dashboard=curr_dash,
-            )
-            print(
-                f'Dashboard "{dash_name}" updated successfully at {dash_updated.create_time} with links to other dashboards'
-            )
-            print(f"{host_url}/dashboardsv3/{dashboard_id}/published")
-            break
+        print(f"{host_url}/dashboardsv3/{dashboard_id}/published")
 
 
 # Publish dashboards
