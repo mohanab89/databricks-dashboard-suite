@@ -90,8 +90,8 @@ This repository contains a suite of analytics dashboards for Databricks environm
 │   ├── [System Tables] Data Lineage and Catalog Utilization.lvdash.json    # Code for Data Lineage and Catalog Utilization Dashboard  
 │   ├── [System Tables] Genie Usage Cost Tracking.lvdash.json               # Code for Genie Usage Cost Tracking Dashboard  
 │   ├── [System Tables] AI & ML Infrastructure Cost.lvdash.json             # Code for AI & ML Infrastructure Cost Dashboard  
-│   ├── create_dashboards.ipynb                                             # Python code to deploy the dashboards to your Databricks  
-└── └── extract_dashboard  .ipynb                                           # Python code to extract a specific dashboard
+│   ├── create_dashboards.py                                                # Python code to deploy the dashboards to your Databricks  
+└── └── extract_dashboard.py                                                # Python code to extract a specific dashboard
 ```
 ## Setup and Usage
 
