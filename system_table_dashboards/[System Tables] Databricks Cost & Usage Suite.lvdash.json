@@ -6336,7 +6336,7 @@
                 "showTitle": true,
                 "showDescription": true,
                 "title": "Cost by Workspace t30",
-                "description": "$list distribution across different workspaces in the last 30 days"
+                "description": "$list distribution across different workspaces"
               }
             }
           },
@@ -6392,7 +6392,7 @@
                 "showTitle": true,
                 "showDescription": true,
                 "title": "Cost by Compute Type t30",
-                "description": "$list distribution across different compute types in the last 30 days"
+                "description": "$list distribution across different compute types"
               }
             }
           },
@@ -10521,9 +10521,9 @@
               "withRowNumber": false,
               "frame": {
                 "showTitle": true,
-                "title": "Most Expensive Jobs Last 30 Days",
+                "title": "Most Expensive Jobs",
                 "showDescription": true,
-                "description": "List the most expensive jobs and includes the $list for the last 30 days combined."
+                "description": "List the most expensive jobs and includes the $list combined."
               }
             }
           },
@@ -10827,8 +10827,8 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Untagged Jobs Last 30 Days",
-                "description": "These jobs are not tagged and have been run in last 30 days; consider tagging them for cost attribution"
+                "title": "Untagged Jobs",
+                "description": "These jobs are not tagged and have been run; consider tagging them for cost attribution"
               }
             }
           },
@@ -11331,8 +11331,8 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Highest Failure Jobs Last 30 Days",
-                "description": "Shows jobs with a high number of failed runs over the last 30 days; includes number of runs, number of failures, the success ratio, and list cost of the job\u2019s failed runs."
+                "title": "Highest Failure Jobs",
+                "description": "Shows jobs with a high number of failed runs; includes number of runs, number of failures, the success ratio, and list cost of the job\u2019s failed runs."
               }
             }
           },
@@ -11744,9 +11744,9 @@
               "withRowNumber": false,
               "frame": {
                 "showTitle": true,
-                "title": "Most Retried Runs Last 30 Days",
+                "title": "Most Retried Runs",
                 "showDescription": true,
-                "description": "Lists jobs with frequent repairs over the last 30 days, including the number of repairs, the cumulative duration of the repair runs, and the cost of the repairs. NULL repair time means there was no successful repair (yet)."
+                "description": "Lists jobs with frequent repairs, including the number of repairs, the cumulative duration of the repair runs, and the cost of the repairs. NULL repair time means there was no successful repair (yet)."
               }
             }
           },
@@ -12191,7 +12191,7 @@
               "withRowNumber": false,
               "frame": {
                 "showTitle": true,
-                "title": "Jobs Outliers Last 30 Days",
+                "title": "Jobs Outliers",
                 "showDescription": true,
                 "description": "Helps analyze the job's $list deviation across multiple runs. "
               }
@@ -12685,7 +12685,7 @@
                 "showTitle": true,
                 "showDescription": true,
                 "title": "Top 10 longest running jobs t30",
-                "description": "Longest running jobs in the last 30 days"
+                "description": "Longest running jobs"
               }
             }
           },
@@ -13616,7 +13616,7 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Jobs with Fixed Number of Workers Last 30 Days",
+                "title": "Jobs with Fixed Number of Workers",
                 "description": "These jobs do not leverage autoscaling, consider adding it to optimise the resources utilisation."
               }
             }
@@ -13933,7 +13933,7 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Jobs Running on Outdated DBR Version Last 30 Days",
+                "title": "Jobs Running on Outdated DBR Version",
                 "description": "These jobs are on old runtimes; consider upgrading to ensure optimal performance and ability to use new features"
               }
             }
@@ -14213,7 +14213,7 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Most Frequent Jobs on All Purpose Clusters Last 30 Days",
+                "title": "Most Frequent Jobs on All Purpose Clusters",
                 "description": "High frequency jobs executed on all purpose clusters might prevent them from shutting down."
               }
             }
@@ -14592,7 +14592,7 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Stale Datasets Produced Last 30 Days",
+                "title": "Stale Datasets Produced",
                 "description": "Shows unused datasets created by jobs which are not getting consumed anywhere"
               }
             }
@@ -18979,8 +18979,8 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": true,
-                "title": "Untagged Warehouses Last 30 Days",
-                "description": "These warehouses are not tagged and have been used in last 30 days; consider tagging them for cost attribution"
+                "title": "Untagged Warehouses",
+                "description": "These warehouses are not tagged and have been used; consider tagging them for cost attribution"
               }
             }
           },
@@ -23207,9 +23207,9 @@
             "spec": {
               "version": 2,
               "frame": {
-                "title": "Active Endpoints (30d)",
+                "title": "Active Endpoints",
                 "showTitle": true,
-                "description": "Count of distinct Model Serving, Vector Search, Lakebase, and AI Gateway endpoints with recorded usage in the last 30 days.",
+                "description": "Count of distinct Model Serving, Vector Search, Lakebase, and AI Gateway endpoints with recorded usage.",
                 "showDescription": true
               },
               "widgetType": "counter",
@@ -23393,9 +23393,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Model Serving \u2014 Top Endpoints (30d)",
+                "title": "Model Serving \u2014 Top Endpoints",
                 "showTitle": true,
-                "description": "Top 15 Model Serving endpoints ranked by total billed list cost over the last 30 days \u2014 covers both custom inference endpoints and built-in foundation models.",
+                "description": "Top 15 Model Serving endpoints ranked by total billed list cost \u2014 covers both custom inference endpoints and built-in foundation models.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -23462,9 +23462,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Vector Search \u2014 Top Endpoints (30d)",
+                "title": "Vector Search \u2014 Top Endpoints",
                 "showTitle": true,
-                "description": "Top 15 Vector Search endpoints ranked by total billed list cost over the last 30 days \u2014 highlights which embedding indexes are most resource-intensive.",
+                "description": "Top 15 Vector Search endpoints ranked by total billed list cost \u2014 highlights which embedding indexes are most resource-intensive.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -23531,9 +23531,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Lakebase \u2014 Top Endpoints (30d)",
+                "title": "Lakebase \u2014 Top Endpoints",
                 "showTitle": true,
-                "description": "Top 15 Lakebase Postgres endpoints (ep-* IDs) ranked by total billed cost over the last 30 days, enabling per-database-project spend tracking.",
+                "description": "Top 15 Lakebase Postgres endpoints (ep-* IDs) ranked by total billed cost, enabling per-database-project spend tracking.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -23595,9 +23595,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Apps \u2014 Top Applications (30d)",
+                "title": "Apps \u2014 Top Applications",
                 "showTitle": true,
-                "description": "Top 15 Databricks Apps ranked by total serverless compute cost over the last 30 days.",
+                "description": "Top 15 Databricks Apps ranked by total serverless compute cost.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -23664,9 +23664,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "AI Gateway \u2014 Top Endpoints (30d)",
+                "title": "AI Gateway \u2014 Top Endpoints",
                 "showTitle": true,
-                "description": "Top 15 AI Gateway proxy endpoints ranked by total billed cost over the last 30 days \u2014 shows which managed LLM routes are driving the most traffic cost.",
+                "description": "Top 15 AI Gateway proxy endpoints ranked by total billed cost \u2014 shows which managed LLM routes are driving the most traffic cost.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -23876,7 +23876,7 @@
             "spec": {
               "version": 2,
               "frame": {
-                "title": "AI/ML Infrastructure Detail (Last 30 Days)",
+                "title": "AI/ML Infrastructure Detail",
                 "showTitle": true,
                 "description": "Row-level cost breakdown by workspace, product, SKU, endpoint, and application \u2014 use for chargeback reporting, audit, and root-cause analysis on cost spikes.",
                 "showDescription": true
@@ -24063,7 +24063,7 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Lakebase \u2014 Compute vs. Storage Daily Cost (30d)",
+                "title": "Lakebase \u2014 Compute vs. Storage Daily Cost",
                 "showTitle": true,
                 "description": "Daily Lakebase cost split between Compute (active query execution) and Storage (data volume at rest) SKUs \u2014 reveals whether spend is driven by workload or data growth.",
                 "showDescription": true
@@ -24284,9 +24284,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "AI/ML Cost by Workspace (30d)",
+                "title": "AI/ML Cost by Workspace",
                 "showTitle": true,
-                "description": "Total 30-day AI/ML cost per workspace stacked by product, sorted by highest total spend \u2014 primary input for workspace-level chargeback attribution.",
+                "description": "Total AI/ML cost per workspace stacked by product, sorted by highest total spend \u2014 primary input for workspace-level chargeback attribution.",
                 "showDescription": true
               },
               "mark": {
@@ -24431,9 +24431,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Product \u00d7 Workspace Cost Matrix (30d)",
+                "title": "Product \u00d7 Workspace Cost Matrix",
                 "showTitle": true,
-                "description": "Color-intensity matrix of 30-day spend: each cell shows total cost for one product\u2013workspace pair \u2014 darker blue means higher spend, making it easy to spot the costliest combinations.",
+                "description": "Color-intensity matrix of spend: each cell shows total cost for one product\u2013workspace pair \u2014 darker blue means higher spend, making it easy to spot the costliest combinations.",
                 "showDescription": true
               },
               "widgetType": "heatmap",
@@ -24929,9 +24929,9 @@
             "spec": {
               "version": 2,
               "frame": {
-                "title": "30-Day Total DBUs",
+                "title": "Total DBUs",
                 "showTitle": true,
-                "description": "Total DBUs consumed by Genie queries over the last 30 days, including both free and billed tiers.",
+                "description": "Total DBUs consumed by Genie queries, including both free and billed tiers.",
                 "showDescription": true
               },
               "widgetType": "counter",
@@ -25406,9 +25406,9 @@
             "spec": {
               "version": 3,
               "frame": {
-                "title": "Top Users by Cost (Last 30 Days)",
+                "title": "Top Users by Cost",
                 "showTitle": true,
-                "description": "Top users ranked by total billed Genie list cost over the last 30 days.",
+                "description": "Top users ranked by total billed Genie list cost.",
                 "showDescription": true
               },
               "widgetType": "bar",
@@ -25902,9 +25902,9 @@
             ],
             "spec": {
               "frame": {
-                "title": "Genie User Activity (Last 30 Days)",
+                "title": "Genie User Activity",
                 "showTitle": true,
-                "description": "Per-user Genie consumption over the last 30 days: active days, total DBUs, list cost, and average daily cost \u2014 for cost attribution and usage audits.",
+                "description": "Per-user Genie consumption: active days, total DBUs, list cost, and average daily cost \u2014 for cost attribution and usage audits.",
                 "showDescription": true
               },
               "version": 2,
@@ -26056,9 +26056,9 @@
             ],
             "spec": {
               "frame": {
-                "title": "Cost by Surface (Last 30 Days)",
+                "title": "Cost by Surface",
                 "showTitle": true,
-                "description": "Share of last-30-day billed Genie spend attributable to each surface type.",
+                "description": "Share of billed Genie spend attributable to each surface type.",
                 "showDescription": true
               },
               "version": 3,
@@ -26115,7 +26115,7 @@
               "frame": {
                 "title": "Free vs Billed DBUs",
                 "showTitle": true,
-                "description": "Proportion of total DBUs in the last 30 days that were free-tier vs. billed-tier.",
+                "description": "Proportion of total DBUs that were free-tier vs. billed-tier.",
                 "showDescription": true
               },
               "version": 3,
@@ -26170,9 +26170,9 @@
             ],
             "spec": {
               "frame": {
-                "title": "Cost by SKU / Region (Last 30 Days)",
+                "title": "Cost by SKU / Region",
                 "showTitle": true,
-                "description": "Distribution of last-30-day Genie spend broken down by SKU and region.",
+                "description": "Distribution of Genie spend broken down by SKU and region.",
                 "showDescription": true
               },
               "version": 3,
