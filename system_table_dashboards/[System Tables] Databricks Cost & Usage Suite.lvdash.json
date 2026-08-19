@@ -333,7 +333,28 @@
         "WHERE\n",
         "  t1.billing_origin_product = 'JOBS'\n",
         "  AND t1.usage_metadata.job_id IS NOT NULL\n",
-        "  AND t1.usage_metadata.job_run_id IS NOT NULL;"
+        "  AND t1.usage_metadata.job_run_id IS NOT NULL\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -468,7 +489,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
         "    and t1.usage_metadata.job_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "),\n",
         "tagspend as (\n",
         "  select\n",
@@ -490,6 +512,25 @@
         "  tagspend t1\n",
         "  LEFT JOIN {catalog}.{schema}.workspace_reference t3 USING (workspace_id)\n",
         "  LEFT JOIN most_recent_jobs t4 USING (workspace_id, job_id);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -670,7 +711,8 @@
         "      WHERE\n",
         "        t1.billing_origin_product = 'JOBS'\n",
         "        and t1.usage_metadata.job_id is not null\n",
-        "        AND usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "        AND (:date_range.min IS NULL OR usage_date >= :date_range.min)\n",
+        "        AND (:date_range.max IS NULL OR usage_date <= :date_range.max)\n",
         "    )\n",
         "),\n",
         "agg_data as (\n",
@@ -707,6 +749,25 @@
         "  all\n",
         "order by\n",
         "  list_cost desc;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -760,7 +821,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
         "    AND t1.usage_metadata.job_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "  GROUP BY\n",
         "    ALL\n",
         ")\n",
@@ -786,6 +848,25 @@
         "  ALL\n",
         "ORDER BY\n",
         "  list_cost DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -843,8 +924,29 @@
         "  t1.billing_origin_product = 'JOBS'\n",
         "  AND t1.usage_metadata.job_id IS NOT NULL\n",
         "  AND t1.usage_metadata.job_run_id IS NOT NULL\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "group by\n",
         "  all;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -875,7 +977,8 @@
         "    )\n",
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "),\n",
         "most_recent_jobs as (\n",
         "  SELECT\n",
@@ -1009,7 +1112,8 @@
         "    system.lakeflow.job_run_timeline\n",
         "  WHERE\n",
         "    result_state IS NOT NULL\n",
-        "    AND period_end_time >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "    AND (:date_range.min IS NULL OR period_end_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR period_end_time <= :date_range.max)\n",
         ")\n",
         "SELECT\n",
         "  coalesce(first(t2.name), t1.job_id) as job_name,\n",
@@ -1035,6 +1139,25 @@
         "  ALL\n",
         "ORDER BY\n",
         "  failures DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1065,7 +1188,8 @@
         "    )\n",
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "),\n",
         "most_recent_jobs as (\n",
         "  SELECT\n",
@@ -1262,6 +1386,25 @@
         "  t1.period_end_time\n",
         "ORDER BY\n",
         "  repairs DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1314,7 +1457,8 @@
         "    t1.billing_origin_product = 'JOBS'\n",
         "    AND t1.usage_metadata.job_id IS NOT NULL\n",
         "    AND t1.usage_metadata.job_run_id IS NOT NULL\n",
-        "    AND t1.usage_start_time >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_start_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_start_time <= :date_range.max)\n",
         "  GROUP BY\n",
         "    1,\n",
         "    2,\n",
@@ -1338,7 +1482,7 @@
         "  FROM\n",
         "    stats_per_job_run\n",
         "  WHERE\n",
-        "    first_seen > CURRENT_TIMESTAMP() - INTERVAL 30 DAYS\n",
+        "    (:date_range.min IS NULL OR first_seen >= :date_range.min)\n",
         "  GROUP BY\n",
         "    ALL\n",
         "  ORDER BY\n",
@@ -1355,6 +1499,25 @@
         "  LEFT JOIN most_recent_jobs t3 USING (workspace_id, job_id)\n",
         "ORDER BY\n",
         "  list_cost_deviation_from_p90 DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1422,7 +1585,8 @@
         "    billing_w_team t1\n",
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
-        "    AND usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "    AND (:date_range.min IS NULL OR usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR usage_date <= :date_range.max)\n",
         "  group by\n",
         "    all\n",
         ")\n",
@@ -1440,7 +1604,27 @@
         "  LEFT JOIN {catalog}.{schema}.workspace_reference t3 USING (workspace_id)\n",
         "  LEFT JOIN most_recent_jobs t4 USING (workspace_id, job_id)\n",
         "WHERE\n",
-        "  period_start_time >= CURRENT_DATE() - INTERVAL 30 DAYS;"
+        "  (:date_range.min IS NULL OR period_start_time >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR period_start_time <= :date_range.max);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1469,7 +1653,7 @@
         "    system.billing.usage t1\n",
         "    LEFT JOIN most_recent_jobs t2 ON t1.workspace_id = t2.workspace_id\n",
         "    AND t1.usage_metadata.job_id = t2.job_id\n",
-        "  WHERE usage_date between current_date() - INTERVAL 180 DAY and current_date() - INTERVAL 1 DAY\n",
+        "  WHERE (:date_range.min IS NULL OR usage_date >= :date_range.min) AND (:date_range.max IS NULL OR usage_date <= :date_range.max)\n",
         "),\n",
         "jobs_usage as (\n",
         "  SELECT\n",
@@ -1513,8 +1697,8 @@
         "        period_start_time,\n",
         "        period_end_time\n",
         "    FROM system.lakeflow.job_run_timeline\n",
-        "    WHERE period_start_time >= current_date() - INTERVAL 180 DAY\n",
-        "    and period_end_time <= current_date() - INTERVAL 1 DAY\n",
+        "    WHERE (:date_range.min IS NULL OR period_start_time >= :date_range.min)\n",
+        "    and (:date_range.max IS NULL OR period_end_time <= :date_range.max)\n",
         "),\n",
         "expanded_dates AS (\n",
         "    SELECT\n",
@@ -1572,6 +1756,25 @@
         "  LEFT JOIN most_recent_jobs t4 USING (workspace_id, job_id)\n",
         "WHERE\n",
         "  date(t1.job_date) < current_date();"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1653,7 +1856,28 @@
         "  LEFT JOIN {catalog}.{schema}.workspace_reference t3 USING (workspace_id)\n",
         "  LEFT JOIN most_recent_jobs t4 USING (workspace_id, job_id)\n",
         "WHERE\n",
-        "  result_state IS NOT NULL;"
+        "  result_state IS NOT NULL\n",
+        "  AND (:date_range.min IS NULL OR t1.period_end_time >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.period_end_time <= :date_range.max);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1715,6 +1939,8 @@
         "    )\n",
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_end_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_start_time <= :date_range.max)\n",
         "),\n",
         "cumulative_run_status_cost as (\n",
         "  SELECT\n",
@@ -1784,6 +2010,25 @@
         "  job_id,\n",
         "  run_id,\n",
         "  usage_end_time;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1858,7 +2103,8 @@
         "  FROM\n",
         "    system.lakeflow.job_run_timeline\n",
         "  WHERE\n",
-        "    period_start_time > CURRENT_TIMESTAMP() - INTERVAL 30 DAYS\n",
+        "    (:date_range.min IS NULL OR period_start_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR period_start_time <= :date_range.max)\n",
         "  GROUP BY\n",
         "    ALL\n",
         ")\n",
@@ -1888,6 +2134,25 @@
         "  mean_seconds DESC\n",
         "LIMIT\n",
         "  10;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -1969,7 +2234,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
         "    AND t1.usage_metadata.job_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "  GROUP BY\n",
         "    ALL\n",
         "),\n",
@@ -1999,7 +2265,8 @@
         "  from\n",
         "    system.compute.node_timeline\n",
         "  WHERE\n",
-        "    start_time >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    (:date_range.min IS NULL OR start_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR start_time <= :date_range.max)\n",
         "),\n",
         "jobswithutil as (\n",
         "  select\n",
@@ -2033,6 +2300,25 @@
         "  LEFT JOIN {catalog}.{schema}.workspace_reference t3 USING (workspace_id)\n",
         "order by\n",
         "  `Avg Memory Utilization`;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -2115,7 +2401,8 @@
         "    t1.billing_origin_product = 'JOBS'\n",
         "    AND t1.usage_metadata.job_id IS NOT NULL\n",
         "    AND t1.usage_metadata.cluster_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "  GROUP BY\n",
         "    ALL\n",
         "),\n",
@@ -2181,6 +2468,25 @@
         "  3\n",
         "ORDER BY\n",
         "  list_cost DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -2262,7 +2568,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'JOBS'\n",
         "    AND t1.usage_metadata.job_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "  GROUP BY\n",
         "    ALL\n",
         "),\n",
@@ -2316,6 +2623,25 @@
         "  3,\n",
         "  4,\n",
         "  5;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -2344,7 +2670,8 @@
         "  FROM\n",
         "    system.lakeflow.job_task_run_timeline\n",
         "  WHERE\n",
-        "    period_start_time >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    (:date_range.min IS NULL OR period_start_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR period_start_time <= :date_range.max)\n",
         "),\n",
         "all_purpose_cluster_jobs AS (\n",
         "  SELECT\n",
@@ -2445,6 +2772,25 @@
         "  t1.job_id\n",
         "ORDER BY\n",
         "  task_runs DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -2517,7 +2863,8 @@
         "      WHERE\n",
         "        t1.billing_origin_product = 'JOBS'\n",
         "        and t1.usage_metadata.job_id is not null\n",
-        "        AND usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "        AND (:date_range.min IS NULL OR usage_date >= :date_range.min)\n",
+        "        AND (:date_range.max IS NULL OR usage_date <= :date_range.max)\n",
         "    )\n",
         "),\n",
         "agg_cost AS (\n",
@@ -2544,7 +2891,8 @@
         "    system.access.table_lineage\n",
         "  WHERE\n",
         "    source_table_full_name IS NOT NULL\n",
-        "    AND event_date > CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR event_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR event_date <= :date_range.max)\n",
         "),\n",
         "job_tables AS (\n",
         "  SELECT\n",
@@ -2568,7 +2916,8 @@
         "    AND entity_type = 'JOB'\n",
         "    AND entity_id IS NOT NULL\n",
         "    AND entity_id <> ''\n",
-        "    AND event_date > CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR event_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR event_date <= :date_range.max)\n",
         "),\n",
         "dataset_array AS (\n",
         "  SELECT\n",
@@ -2616,6 +2965,25 @@
         "  and list_cost IS NOT NULL\n",
         "order by\n",
         "  list_cost desc;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -6187,85 +6555,234 @@
             "name": "jobs_8db952ae",
             "queries": [
               {
-                "name": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc17e69c7009c4b167331e_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/635f8a685a374f7794629d46d3fca649_date_range",
                 "query": {
                   "datasetName": "jobs_07398605",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1838bdb527766f27a00a_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/79960d8a2ce94360989f06bc90aaaa3f_date_range",
                 "query": {
-                  "datasetName": "jobs_8ee7685e",
-                  "fields": [
+                  "datasetName": "jobs_11611f07",
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1875a3ca8b3f6c38bf37_job_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/80ae6267579c41a0bbbfdad645bd20aa_date_range",
                 "query": {
                   "datasetName": "jobs_1e4e16c0",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "job_date",
-                      "expression": "`job_date`"
-                    },
-                    {
-                      "name": "job_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1881ba741596524f41b0_period_end_time",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/689b3b4c15674cd88948982a7c25271a_date_range",
                 "query": {
-                  "datasetName": "jobs_da68cf08",
-                  "fields": [
+                  "datasetName": "jobs_38f9cb3c",
+                  "parameters": [
                     {
-                      "name": "period_end_time",
-                      "expression": "`period_end_time`"
-                    },
-                    {
-                      "name": "period_end_time_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc188ca0fbf01a00ba4b21_usage_end_time",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/62d9e2537b14414997dfe8025a9cad2e_date_range",
+                "query": {
+                  "datasetName": "jobs_6e7c6490",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/e537052344d1446782e1bdbfd6c65532_date_range",
+                "query": {
+                  "datasetName": "jobs_747b8e0e",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/675c9f02e1784ac1ba99535e1c57a5ee_date_range",
+                "query": {
+                  "datasetName": "jobs_8cd4b39f",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/2cde8cb409724a108919460cdc63e3da_date_range",
+                "query": {
+                  "datasetName": "jobs_8ee7685e",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/04cba3544aed4148b8b03044bec90187_date_range",
+                "query": {
+                  "datasetName": "jobs_9738c1b0",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b02458003d054d1faa45daf6ce19423c_date_range",
                 "query": {
                   "datasetName": "jobs_9bbfcd27",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_end_time",
-                      "expression": "`usage_end_time`"
-                    },
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/97f522d38c2a4a2ba041b166904b4fd5_date_range",
+                "query": {
+                  "datasetName": "jobs_9cc64b3d",
+                  "parameters": [
                     {
-                      "name": "usage_end_time_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/a73d1b1fa93c4c15a1068f7aa8162255_date_range",
+                "query": {
+                  "datasetName": "jobs_9f1b61ef",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/dba9186b6271472986f50067dc076736_date_range",
+                "query": {
+                  "datasetName": "jobs_a166c847",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b6095e32993c40f5bdf8eb0aa33e6d67_date_range",
+                "query": {
+                  "datasetName": "jobs_bc463c3f",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/7fb91c3be7224470a57a1da430dbc819_date_range",
+                "query": {
+                  "datasetName": "jobs_da68cf08",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/262a33906b5f4c7cb8ddddc52b189097_date_range",
+                "query": {
+                  "datasetName": "jobs_e4d4c1ff",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/99008f9b8c6c46d7a762bd6d32192a99_date_range",
+                "query": {
+                  "datasetName": "jobs_f5931b7b",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b987226f62c54465a6e7117f50f430cc_date_range",
+                "query": {
+                  "datasetName": "jobs_fe4804e7",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
@@ -6278,29 +6795,76 @@
               "encodings": {
                 "fields": [
                   {
-                    "fieldName": "usage_date",
-                    "displayName": "usage_date",
-                    "queryName": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc17e69c7009c4b167331e_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/635f8a685a374f7794629d46d3fca649_date_range"
                   },
                   {
-                    "fieldName": "usage_date",
-                    "displayName": "usage_date",
-                    "queryName": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1838bdb527766f27a00a_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/79960d8a2ce94360989f06bc90aaaa3f_date_range"
                   },
                   {
-                    "fieldName": "job_date",
-                    "displayName": "job_date",
-                    "queryName": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1875a3ca8b3f6c38bf37_job_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/80ae6267579c41a0bbbfdad645bd20aa_date_range"
                   },
                   {
-                    "fieldName": "period_end_time",
-                    "displayName": "period_end_time",
-                    "queryName": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc1881ba741596524f41b0_period_end_time"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/689b3b4c15674cd88948982a7c25271a_date_range"
                   },
                   {
-                    "fieldName": "usage_end_time",
-                    "displayName": "usage_end_time",
-                    "queryName": "dashboards/01ef9641cdd8191099b62856082e0945/datasets/01ef9641cddc188ca0fbf01a00ba4b21_usage_end_time"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/62d9e2537b14414997dfe8025a9cad2e_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/e537052344d1446782e1bdbfd6c65532_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/675c9f02e1784ac1ba99535e1c57a5ee_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/2cde8cb409724a108919460cdc63e3da_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/04cba3544aed4148b8b03044bec90187_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b02458003d054d1faa45daf6ce19423c_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/97f522d38c2a4a2ba041b166904b4fd5_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/a73d1b1fa93c4c15a1068f7aa8162255_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/dba9186b6271472986f50067dc076736_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b6095e32993c40f5bdf8eb0aa33e6d67_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/7fb91c3be7224470a57a1da430dbc819_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/262a33906b5f4c7cb8ddddc52b189097_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/99008f9b8c6c46d7a762bd6d32192a99_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/b987226f62c54465a6e7117f50f430cc_date_range"
                   }
                 ]
               },
@@ -6309,7 +6873,7 @@
                   "range": {
                     "dataType": "DATETIME",
                     "min": {
-                      "value": "now-30d/d"
+                      "value": "now-14d/d"
                     },
                     "max": {
                       "value": "now-1d/d"
