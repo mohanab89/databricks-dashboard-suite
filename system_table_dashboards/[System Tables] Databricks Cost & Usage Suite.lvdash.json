@@ -4116,12 +4116,32 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product IN ('LAKEBASE', 'VECTOR_SEARCH', 'MODEL_SERVING', 'AI_GATEWAY', 'APPS')\n",
-        "  AND u.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL\n",
         "ORDER BY\n",
         "  list_cost DESC\n",
         "LIMIT 100"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4155,11 +4175,31 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product IN ('LAKEBASE', 'VECTOR_SEARCH', 'MODEL_SERVING', 'AI_GATEWAY')\n",
-        "  AND u.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL\n",
         "ORDER BY\n",
         "  list_cost DESC"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4188,8 +4228,29 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product IN ('LAKEBASE', 'VECTOR_SEARCH', 'MODEL_SERVING', 'AI_GATEWAY', 'APPS')\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4294,11 +4355,31 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product = 'APPS'\n",
-        "  AND u.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL\n",
         "ORDER BY\n",
         "  list_cost DESC"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4382,9 +4463,29 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product IN ('LAKEBASE', 'VECTOR_SEARCH', 'MODEL_SERVING', 'AI_GATEWAY', 'APPS')\n",
-        "  AND u.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4491,9 +4592,29 @@
         "      ON u.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  u.billing_origin_product = 'LAKEBASE'\n",
-        "  AND u.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR u.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR u.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4593,8 +4714,29 @@
         "      ON t1.workspace_id = ws.workspace_id\n",
         "WHERE\n",
         "  t1.billing_origin_product = 'GENIE'\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4729,9 +4871,29 @@
         "WHERE\n",
         "  t1.billing_origin_product = 'GENIE'\n",
         "  AND t1.sku_name != 'GENIE_FREE_USAGE'\n",
-        "  AND t1.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4856,8 +5018,29 @@
         "WHERE\n",
         "  t1.billing_origin_product = 'GENIE'\n",
         "  AND t1.sku_name != 'GENIE_FREE_USAGE'\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -4891,12 +5074,32 @@
         "WHERE\n",
         "  t1.billing_origin_product = 'GENIE'\n",
         "  AND t1.sku_name != 'GENIE_FREE_USAGE'\n",
-        "  AND t1.usage_date >= current_date() - 30\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "GROUP BY\n",
         "  ALL\n",
         "ORDER BY\n",
         "  list_cost DESC\n",
         "LIMIT 100"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-30d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -21597,85 +21800,78 @@
             "name": "aiml_filter_date",
             "queries": [
               {
-                "name": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bfd315bdbea9377609f76f4b_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/c39d83239d4e43efa6806f3985d45bed_date_range",
                 "query": {
                   "datasetName": "aiml_aiml_overview_daily",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bfb71706b65ee5e7f91719ee_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/443009063e594dd78cfeff167c1db0aa_date_range",
                 "query": {
                   "datasetName": "aiml_aiml_endpoint_30d",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5c00e10a594c66023a9d3731d_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/59c4b2a7818f41e6a2e0e1c91623d87a_date_range",
                 "query": {
                   "datasetName": "aiml_apps_30d",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bf8514eb94357c5954747444_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/ea84b4263062467882a28439290ea662_date_range",
                 "query": {
                   "datasetName": "aiml_aiml_detail_30d",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
                 }
               },
               {
-                "name": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c8ad8014839946f63db8cadf3b_usage_date",
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/1520895420c949668c5fb3a2d404adae_date_range",
                 "query": {
                   "datasetName": "aiml_aiml_lakebase_sku_split",
-                  "fields": [
+                  "parameters": [
                     {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/9bc687690747462d96f84505be6f957e_date_range",
+                "query": {
+                  "datasetName": "aiml_aiml_by_workspace_30d",
+                  "parameters": [
                     {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
@@ -21692,26 +21888,43 @@
               "encodings": {
                 "fields": [
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bfd315bdbea9377609f76f4b_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/c39d83239d4e43efa6806f3985d45bed_date_range"
                   },
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bfb71706b65ee5e7f91719ee_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/443009063e594dd78cfeff167c1db0aa_date_range"
                   },
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5c00e10a594c66023a9d3731d_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/59c4b2a7818f41e6a2e0e1c91623d87a_date_range"
                   },
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c5bf8514eb94357c5954747444_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/ea84b4263062467882a28439290ea662_date_range"
                   },
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186c479fc192aad3d79c9ecf1f781/datasets/01f186c8ad8014839946f63db8cadf3b_usage_date"
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/1520895420c949668c5fb3a2d404adae_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/9bc687690747462d96f84505be6f957e_date_range"
                   }
                 ]
+              },
+              "selection": {
+                "defaultSelection": {
+                  "range": {
+                    "dataType": "DATETIME",
+                    "min": {
+                      "value": "now-30d/d"
+                    },
+                    "max": {
+                      "value": "now-1d/d"
+                    }
+                  }
+                }
               }
             }
           },
@@ -23591,57 +23804,6 @@
             "name": "genie_filter_date",
             "queries": [
               {
-                "name": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01c1e1e92bd1ae0712128d0fb_usage_date",
-                "query": {
-                  "datasetName": "genie_genie_daily_cost",
-                  "fields": [
-                    {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
-                "name": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01bdf12d494dc55d40a01136b_usage_date",
-                "query": {
-                  "datasetName": "genie_genie_daily_cost_30d",
-                  "fields": [
-                    {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
-                "name": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01b39147bb049555393eed634_usage_date",
-                "query": {
-                  "datasetName": "genie_genie_free_vs_billed",
-                  "fields": [
-                    {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
                 "name": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01b931dc1a4aa2ce9121b4819_usage_date",
                 "query": {
                   "datasetName": "genie_genie_monthly_cumulative",
@@ -23653,6 +23815,58 @@
                     {
                       "name": "usage_date_associativity",
                       "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/c1219a9844604d36bd179d8e3f82bca8_date_range",
+                "query": {
+                  "datasetName": "genie_genie_daily_cost",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/122a41f4aced4473a009ef4ff2e2fd2f_date_range",
+                "query": {
+                  "datasetName": "genie_genie_daily_cost_30d",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/220ddff0c74e4536b8ccb0be9724ebaa_date_range",
+                "query": {
+                  "datasetName": "genie_genie_free_vs_billed",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/24613a33771e4042903994979e3625bb_date_range",
+                "query": {
+                  "datasetName": "genie_genie_user_activity_30d",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
                     }
                   ],
                   "disaggregated": false
@@ -23670,21 +23884,38 @@
                 "fields": [
                   {
                     "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01c1e1e92bd1ae0712128d0fb_usage_date"
-                  },
-                  {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01bdf12d494dc55d40a01136b_usage_date"
-                  },
-                  {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01b39147bb049555393eed634_usage_date"
-                  },
-                  {
-                    "fieldName": "usage_date",
                     "queryName": "dashboards/01f186bbd006157ea4d7616601c22bd7/datasets/01f186c01b931dc1a4aa2ce9121b4819_usage_date"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/c1219a9844604d36bd179d8e3f82bca8_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/122a41f4aced4473a009ef4ff2e2fd2f_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/220ddff0c74e4536b8ccb0be9724ebaa_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/24613a33771e4042903994979e3625bb_date_range"
                   }
                 ]
+              },
+              "selection": {
+                "defaultSelection": {
+                  "range": {
+                    "dataType": "DATETIME",
+                    "min": {
+                      "value": "now-30d/d"
+                    },
+                    "max": {
+                      "value": "now-1d/d"
+                    }
+                  }
+                }
               }
             }
           },
