@@ -2686,7 +2686,28 @@
         "  AND t1.usage_metadata.warehouse_id = t3.warehouse_id\n",
         "WHERE\n",
         "  t1.billing_origin_product = 'SQL'\n",
-        "  AND t1.usage_metadata.warehouse_id IS NOT NULL;"
+        "  AND t1.usage_metadata.warehouse_id IS NOT NULL\n",
+        "  AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "  AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -2794,7 +2815,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'SQL'\n",
         "    and t1.usage_metadata.warehouse_id IS NOT NULL\n",
-        "    AND t1.usage_date >= CURRENT_DATE() - INTERVAL 30 DAY\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_date >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_date <= :date_range.max)\n",
         "),\n",
         "tagspend as (\n",
         "  select\n",
@@ -2816,6 +2838,25 @@
         "  tagspend t1\n",
         "  LEFT JOIN {catalog}.{schema}.workspace_reference t3 USING (workspace_id)\n",
         "  LEFT JOIN {catalog}.{schema}.warehouse_reference t4 USING (workspace_id, warehouse_id);"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -3149,7 +3190,8 @@
         "      WHERE\n",
         "        t1.billing_origin_product = 'SQL'\n",
         "        and t1.usage_metadata.warehouse_id is not null\n",
-        "        AND usage_date >= CURRENT_DATE() - INTERVAL 30 DAYS\n",
+        "        AND (:date_range.min IS NULL OR usage_date >= :date_range.min)\n",
+        "        AND (:date_range.max IS NULL OR usage_date <= :date_range.max)\n",
         "    )\n",
         ")\n",
         "SELECT\n",
@@ -3174,6 +3216,25 @@
         "  cardinality(first(t1.recent_tag_value)) = 0\n",
         "ORDER BY\n",
         "  list_cost DESC;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -3203,6 +3264,8 @@
         "  WHERE\n",
         "    t1.billing_origin_product = 'SQL'\n",
         "    and t1.usage_metadata.warehouse_id is not null\n",
+        "    AND (:date_range.min IS NULL OR t1.usage_end_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR t1.usage_start_time <= :date_range.max)\n",
         "),\n",
         "grouped_billing AS (\n",
         "  SELECT\n",
@@ -3225,6 +3288,8 @@
         "    system.compute.warehouse_events w\n",
         "  WHERE\n",
         "    event_type IN ('RUNNING', 'SCALED_UP', 'SCALED_DOWN', 'STOPPED')\n",
+        "    AND (:date_range.min IS NULL OR event_time >= :date_range.min)\n",
+        "    AND (:date_range.max IS NULL OR event_time <= :date_range.max)\n",
         "  GROUP BY\n",
         "    workspace_id,\n",
         "    warehouse_id,\n",
@@ -3308,6 +3373,25 @@
         "  t1.workspace_id,\n",
         "  t1.warehouse_id,\n",
         "  t1.event_minute;"
+      ],
+      "parameters": [
+        {
+          "displayName": "Date Range",
+          "keyword": "date_range",
+          "dataType": "DATETIME",
+          "complexType": "RANGE",
+          "defaultSelection": {
+            "range": {
+              "dataType": "DATETIME",
+              "min": {
+                "value": "now-14d/d"
+              },
+              "max": {
+                "value": "now-1d/d"
+              }
+            }
+          }
+        }
       ]
     },
     {
@@ -13633,40 +13717,6 @@
             "name": "dbsql_8db952ae",
             "queries": [
               {
-                "name": "dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01ef931cf1e5140b9c871e37c5a98b89_usage_date",
-                "query": {
-                  "datasetName": "dbsql_07398605",
-                  "fields": [
-                    {
-                      "name": "usage_date",
-                      "expression": "`usage_date`"
-                    },
-                    {
-                      "name": "usage_date_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
-                "name": "dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01ef931cf1e5146089d5de2ccffeeb1d_event_minute",
-                "query": {
-                  "datasetName": "dbsql_57a475b4",
-                  "fields": [
-                    {
-                      "name": "event_minute",
-                      "expression": "`event_minute`"
-                    },
-                    {
-                      "name": "event_minute_associativity",
-                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
-                    }
-                  ],
-                  "disaggregated": false
-                }
-              },
-              {
                 "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01f19a84279c1252976905cf169f2e88_date_range",
                 "query": {
                   "datasetName": "dbsql_566012fa",
@@ -13683,6 +13733,58 @@
                 "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01f19a84279c125d9538e0381a70f34f_date_range",
                 "query": {
                   "datasetName": "dbsql_663d0363",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/5bdb3ec0de724b6ebc4191848d5e9781_date_range",
+                "query": {
+                  "datasetName": "dbsql_07398605",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/691bbd6a47a3447288b1a715c6c70d01_date_range",
+                "query": {
+                  "datasetName": "dbsql_57a475b4",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/4f6031c89d9c463ea301244c2f19e8d2_date_range",
+                "query": {
+                  "datasetName": "dbsql_e4d4c1ff",
+                  "parameters": [
+                    {
+                      "name": "date_range",
+                      "keyword": "date_range"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/31e149ca15a346438e2fe6d44fa3a707_date_range",
+                "query": {
+                  "datasetName": "dbsql_11611f07",
                   "parameters": [
                     {
                       "name": "date_range",
@@ -13716,20 +13818,28 @@
               "encodings": {
                 "fields": [
                   {
-                    "fieldName": "usage_date",
-                    "queryName": "dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01ef931cf1e5140b9c871e37c5a98b89_usage_date"
-                  },
-                  {
-                    "fieldName": "event_minute",
-                    "queryName": "dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01ef931cf1e5146089d5de2ccffeeb1d_event_minute"
-                  },
-                  {
                     "parameterName": "date_range",
                     "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01f19a84279c1252976905cf169f2e88_date_range"
                   },
                   {
                     "parameterName": "date_range",
                     "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/01f19a84279c125d9538e0381a70f34f_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/5bdb3ec0de724b6ebc4191848d5e9781_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/691bbd6a47a3447288b1a715c6c70d01_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/4f6031c89d9c463ea301244c2f19e8d2_date_range"
+                  },
+                  {
+                    "parameterName": "date_range",
+                    "queryName": "parameter_dashboards/01ef931977ca1d4192c486b03938dd4d/datasets/31e149ca15a346438e2fe6d44fa3a707_date_range"
                   }
                 ]
               }
